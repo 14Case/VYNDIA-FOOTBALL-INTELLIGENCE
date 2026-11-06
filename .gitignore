@@ -1,0 +1,85 @@
+# ============================================================
+# VYNDIA Football Intelligence — .gitignore
+# ============================================================
+
+# ---------- Node.js / Next.js ----------
+node_modules/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# ---------- Python ----------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# ---------- Environment ----------
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# ---------- IDE ----------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ---------- Build / Output ----------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- Prisma ----------
+# Keep prisma/ directory (schema, migrations)
+# Ignore generated client
+apps/web/node_modules/.prisma/
+
+# ---------- Data (large files) ----------
+data/raw/*.csv
+data/raw/*.json
+data/raw/*.parquet
+data/processed/*.csv
+data/processed/*.json
+data/processed/*.parquet
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/archives/.gitkeep
+
+# ---------- Coverage ----------
+coverage/
+htmlcov/
+.coverage
+.coverage.*
+
+# ---------- Misc ----------
+*.bak
+*.tmp
+*.temp
+.cache/

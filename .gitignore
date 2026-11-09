@@ -26,8 +26,10 @@ build/
 .pytest_cache/
 
 # ---------- Environment ----------
+.env*
 .env
 .env.local
+.env_vercel
 .env.development
 .env.development.local
 .env.test

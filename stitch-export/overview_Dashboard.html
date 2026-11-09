@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-container": "#122131",
+        "secondary-fixed": "#e9ddff",
+        "on-primary-container": "#00285d",
+        "error-container": "#93000a",
+        "surface-container-high": "#1c2b3c",
+        "secondary": "#d0bcff",
+        "outline": "#8c909f",
+        "inverse-on-surface": "#233143",
+        "on-secondary": "#3c0091",
+        "on-primary": "#002e6a",
+        "on-error": "#690005",
+        "on-tertiary-fixed-variant": "#005236",
+        "on-secondary-fixed-variant": "#5516be",
+        "tertiary": "#4edea3",
+        "secondary-fixed-dim": "#d0bcff",
+        "primary-fixed": "#d8e2ff",
+        "on-primary-fixed-variant": "#004395",
+        "surface-dim": "#051424",
+        "on-secondary-fixed": "#23005c",
+        "surface-container-highest": "#273647",
+        "on-surface": "#d4e4fa",
+        "surface-variant": "#273647",
+        "secondary-container": "#571bc1",
+        "tertiary-container": "#00a572",
+        "on-tertiary": "#003824",
+        "primary-container": "#4d8eff",
+        "on-secondary-container": "#c4abff",
+        "inverse-surface": "#d4e4fa",
+        "tertiary-fixed-dim": "#4edea3",
+        "background": "#051424",
+        "outline-variant": "#424754",
+        "tertiary-fixed": "#6ffbbe",
+        "on-primary-fixed": "#001a42",
+        "on-tertiary-fixed": "#002113",
+        "surface-container-low": "#0d1c2d",
+        "inverse-primary": "#005ac2",
+        "surface-tint": "#adc6ff",
+        "on-tertiary-container": "#00311f",
+        "surface": "#051424",
+        "primary": "#adc6ff",
+        "surface-bright": "#2c3a4c",
+        "surface-container-lowest": "#010f1f",
+        "on-surface-variant": "#c2c6d6",
+        "on-background": "#d4e4fa",
+        "primary-fixed-dim": "#adc6ff",
+        "error": "#ffb4ab",
+        "on-error-container": "#ffdad6"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      "spacing": {
+        "gutter": "0.75rem",
+        "space-sm": "0.375rem",
+        "space-lg": "1.25rem",
+        "margin": "1rem",
+        "space-md": "0.75rem",
+        "space-xs": "0.25rem",
+        "space-xl": "1.75rem"
+      },
+      "fontFamily": {
+        "mono-metric-md": ["JetBrains Mono"],
+        "headline-lg": ["Plus Jakarta Sans"],
+        "mono-metric-sm": ["JetBrains Mono"],
+        "body-md": ["Plus Jakarta Sans"],
+        "label-mono": ["JetBrains Mono"],
+        "mono-metric-lg": ["JetBrains Mono"],
+        "body-lg": ["Plus Jakarta Sans"],
+        "headline-sm": ["Plus Jakarta Sans"],
+        "headline-md": ["Plus Jakarta Sans"],
+        "telemetry-micro": ["JetBrains Mono"],
+        "body-sm": ["Plus Jakarta Sans"],
+        "headline-xl": ["Plus Jakarta Sans"],
+        "headline-xl-mobile": ["Plus Jakarta Sans"]
+      },
+      "fontSize": {
+        "mono-metric-md": ["16px", {"lineHeight": "20px", "fontWeight": "500"}],
+        "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+        "mono-metric-sm": ["13px", {"lineHeight": "16px", "fontWeight": "500"}],
+        "body-md": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+        "label-mono": ["11px", {"lineHeight": "14px", "fontWeight": "500"}],
+        "mono-metric-lg": ["28px", {"lineHeight": "32px", "fontWeight": "600"}],
+        "body-lg": ["15px", {"lineHeight": "22px", "fontWeight": "400"}],
+        "headline-sm": ["15px", {"lineHeight": "20px", "fontWeight": "600"}],
+        "headline-md": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+        "telemetry-micro": ["10px", {"lineHeight": "12px", "fontWeight": "400"}],
+        "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+        "headline-xl": ["36px", {"lineHeight": "44px", "fontWeight": "700"}],
+        "headline-xl-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-[264px] bg-surface-container-low border-r border-outline-variant/30 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="p-margin border-b border-outline-variant/20 flex flex-col gap-space-sm"><div class="flex items-center gap-space-md"><img alt="VYNDIA Brand Emblem" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XBtM0ZdT5ViwHz9-8rdyX4xev_Xk34FHVcMXBowoVjF7WTJmWDeC3uZZy4u4QD_YOS7-iyUoUAKE522U_no-KODNpyD4RcAWhr5WrQMxYedPedGT3l4B7f0OJnt_FeUqY3TMPljh0wbsXWjJGgWxiu9GffsWWvEQ0uYGPo36dSCclxsftVp6vf48rcLACQGbiZvGj3brNb7YDoDHxhN9VozVJTl6rUIHQwChAb8XoY"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-wider text-on-surface">VYNDIA</span><span class="font-label-mono text-telemetry-micro tracking-widest text-primary uppercase">INTELLIGENCE</span></div></div><div class="flex items-center justify-between mt-space-xs px-space-sm py-space-xs bg-surface-container rounded border border-outline-variant/30"><div class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span><span class="font-label-mono text-telemetry-micro text-tertiary uppercase">SYS: ONLINE v4.2</span></div><span class="font-label-mono text-telemetry-micro text-outline">LATENCY 18ms</span></div></div><nav class="flex flex-col py-space-md px-space-sm gap-space-lg" data-active-classes="bg-surface-container-high text-primary border-l-2 border-primary font-medium"><div class="flex flex-col gap-space-xs"><span class="px-space-md font-label-mono text-telemetry-micro uppercase tracking-wider text-outline">CORE</span><a aria-current="page" class="flex items-center justify-between px-space-md py-space-sm rounded transition-colors bg-surface-container-high text-primary border-l-2 border-primary font-medium" data-path="overview" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">grid_view</span><span class="font-body-sm text-body-sm">Overview Dashboard</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="live-matches" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">sensors</span><span class="font-body-sm text-body-sm">Live Matches</span></div><span class="flex items-center gap-space-xs bg-error-container/40 text-error px-space-xs py-0.5 rounded font-label-mono text-telemetry-micro"><span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>8</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="upcoming" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">calendar_today</span><span class="font-body-sm text-body-sm">Upcoming Matches</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="predictions" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">neurology</span><span class="font-body-sm text-body-sm">AI Predictions</span></div><span class="bg-secondary-container text-on-secondary-container px-space-xs py-0.5 rounded font-label-mono text-telemetry-micro shadow-[0_0_8px_rgba(208,188,255,0.3)]">HOT</span></a></div><div class="flex flex-col gap-space-xs"><span class="px-space-md font-label-mono text-telemetry-micro uppercase tracking-wider text-outline">INTELLIGENCE</span><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="match-analysis" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">filter_center_focus</span><span class="font-body-sm text-body-sm">Detailed Match Analysis</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="competitions" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">emoji_events</span><span class="font-body-sm text-body-sm">Competitions</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="teams" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">shield</span><span class="font-body-sm text-body-sm">Teams Intelligence</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="players" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">person_check</span><span class="font-body-sm text-body-sm">Player Intelligence</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="absences" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">warning</span><span class="font-body-sm text-body-sm">Injuries &amp; Suspensions</span></div></a></div><div class="flex flex-col gap-space-xs"><span class="px-space-md font-label-mono text-telemetry-micro uppercase tracking-wider text-outline">QUANT &amp; SYSTEM</span><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="stats" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">query_stats</span><span class="font-body-sm text-body-sm">Statistical Analysis</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="history" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-sm text-body-sm">Prediction History</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="agents" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">memory</span><span class="font-body-sm text-body-sm">AI Agent Center</span></div><span class="flex items-center gap-space-xs bg-tertiary-container/20 text-tertiary px-space-xs py-0.5 rounded font-label-mono text-telemetry-micro"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>7 ACTIVE</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="data-sources" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">dataset</span><span class="font-body-sm text-body-sm">Data Sources</span></div></a><a class="flex items-center justify-between px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="settings" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-sm text-body-sm">Settings</span></div></a></div></nav></div><div class="p-margin border-t border-outline-variant/20 flex flex-col gap-space-xs bg-surface-container-lowest/50"><div class="flex items-center justify-between font-label-mono text-telemetry-micro text-outline"><span>DB Sync: 14s ago</span><span class="text-primary">Opta/StatsBomb v2</span></div><p class="font-label-mono text-telemetry-micro text-outline-variant uppercase tracking-wider text-center">Demo Simulation • Non-Betting Platform</p></div></aside><div class="pl-[264px]"><header class="fixed top-0 left-[264px] right-0 h-16 bg-surface/85 backdrop-blur-md border-b border-outline-variant/30 z-40 flex items-center justify-between px-margin"><div class="flex items-center gap-space-lg flex-1"><div class="relative flex items-center w-80"><span class="material-symbols-outlined absolute left-space-md text-outline text-[18px]">search</span><input class="w-full h-8 pl-9 pr-14 bg-surface-container-low border border-outline-variant/40 rounded font-label-mono text-body-sm text-on-surface placeholder:text-outline/60 focus:outline-none focus:border-primary" placeholder="Search competitions, teams, players, match IDs..." type="text"/><span class="absolute right-space-sm font-label-mono text-telemetry-micro text-outline bg-surface-container px-space-xs py-0.5 rounded border border-outline-variant/30">CMD+K</span></div><div class="hidden xl:flex items-center gap-space-xs font-label-mono text-telemetry-micro text-outline"><span class="text-outline/50">COMP:</span><button class="px-space-sm py-1 rounded bg-surface-container-high text-primary hover:bg-surface-container-highest transition-colors">All</button><button class="px-space-sm py-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors">UCL</button><button class="px-space-sm py-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors">Premier League</button><button class="px-space-sm py-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors">La Liga</button><button class="px-space-sm py-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors">Serie A</button><button class="px-space-sm py-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors">CAF</button><button class="px-space-sm py-1 rounded hover:bg-surface-container hover:text-on-surface transition-colors">AFC</button></div></div><div class="flex items-center gap-space-lg"><div class="hidden 2xl:flex items-center gap-space-md border-r border-outline-variant/30 pr-space-lg font-label-mono text-telemetry-micro"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-tertiary"></span><span class="text-outline">Live Feeds:</span><span class="text-on-surface font-semibold">42 Active</span></div><span class="text-outline-variant">|</span><div class="flex items-center gap-space-xs"><span class="text-outline">Model:</span><span class="text-primary font-semibold">PROB-NEURAL-V4.2</span></div><span class="text-outline-variant">|</span><div class="flex items-center gap-space-xs"><span class="text-outline">Brier:</span><span class="text-tertiary font-semibold">0.182</span><span class="text-outline/70">(Top 3%)</span></div></div><div class="flex items-center gap-space-md"><button class="relative p-space-xs rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center gap-space-md pl-space-sm"><div class="relative"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-primary/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM9Q7oI73kcLJEkyQ5LMNVHbK1oJ8h6-nLI1Q9dg0_7lTarghOVtJcOfoC8-Jb1s-WezQzD-kpAd4PzyFZaisoIvBzpIDtcI2OxYixWwdkmuECK9AMTiT0cUOLdSq54EwKsvvlg2bi3yLPfRSDAx4Ck-JgJNe-6sQY59vrjyoqkHJKVbr3ZaOfuVvjiVFn671cNANynzKzUQtBzFJ3K4UoMam0ITIOUGgGjVYQrxAS"/><span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-tertiary ring-1 ring-background"></span></div><div class="hidden md:flex flex-col text-left"><span class="font-headline-sm text-body-sm font-semibold text-on-surface leading-tight">Dr. Elena Rostova</span><span class="font-label-mono text-telemetry-micro text-outline leading-tight">Lead Quant Analyst</span></div></div></div></div></header><main class="w-full pt-16 min-h-screen bg-background"><div class="flex flex-col w-full">
+<div class="p-margin flex flex-col gap-space-lg">
+<!-- Top KPI Telemetry Ribbon -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-gutter">
+<!-- KPI 1: Competitions -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-telemetry-micro text-outline uppercase tracking-wider">COMPETITIONS</span>
+<span class="font-label-mono text-telemetry-micro text-tertiary bg-surface-container-high px-space-xs py-0.5 rounded">+3 WK</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-xs">
+<span class="font-mono-metric-lg text-mono-metric-lg text-on-surface">148</span>
+<span class="font-label-mono text-telemetry-micro text-outline">TIERS 1-3</span>
+</div>
+<div class="flex items-center justify-between text-telemetry-micro font-label-mono text-on-surface-variant pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
+<span>EU 54</span><span>AM 38</span><span>AS 32</span><span>AF 24</span>
+</div>
+</div>
+<!-- KPI 2: Teams -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-telemetry-micro text-outline uppercase tracking-wider">ROSTER POOL</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-xs">
+<span class="font-mono-metric-lg text-mono-metric-lg text-on-surface">2,840</span>
+<span class="font-label-mono text-telemetry-micro text-outline">TEAMS</span>
+</div>
+<div class="flex items-center justify-between text-telemetry-micro font-label-mono text-on-surface-variant pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
+<span class="text-tertiary">99.4% VERIFIED</span>
+<span>41.2k PLAYERS</span>
+</div>
+</div>
+<!-- KPI 3: Scheduled Matches -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-telemetry-micro text-outline uppercase tracking-wider">SCHEDULED TODAY</span>
+<span class="material-symbols-outlined text-outline text-[16px]">calendar_today</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-xs">
+<span class="font-mono-metric-lg text-mono-metric-lg text-primary">38</span>
+<span class="font-label-mono text-telemetry-micro text-outline">MATCHES</span>
+</div>
+<div class="flex items-center justify-between text-telemetry-micro font-label-mono text-on-surface-variant pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
+<span>14 TIER-1</span><span>18 TIER-2</span><span>6 CUPS</span>
+</div>
+</div>
+<!-- KPI 4: Live Matches -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-telemetry-micro text-outline uppercase tracking-wider">LIVE TELEMETRY</span>
+<div class="flex items-center gap-1 bg-surface-container px-space-xs py-0.5 rounded">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="font-label-mono text-telemetry-micro text-error font-bold">AIR</span>
+</div>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-xs">
+<span class="font-mono-metric-lg text-mono-metric-lg text-error">06</span>
+<span class="font-label-mono text-telemetry-micro text-outline">SIMULATING</span>
+</div>
+<div class="flex items-center justify-between text-telemetry-micro font-label-mono text-on-surface-variant pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
+<span class="text-tertiary">0.42s LATENCY</span>
+<span>SUB-SECOND SYNC</span>
+</div>
+</div>
+<!-- KPI 5: Pending Queue -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-telemetry-micro text-outline uppercase tracking-wider">ANALYSIS QUEUE</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">sync_alt</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-xs">
+<span class="font-mono-metric-lg text-mono-metric-lg text-secondary">19</span>
+<span class="font-label-mono text-telemetry-micro text-outline">PENDING</span>
+</div>
+<div class="flex items-center justify-between text-telemetry-micro font-label-mono text-on-surface-variant pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
+<span>T-MINUS 12m</span>
+<span class="text-secondary">AUTO-DISPATCH</span>
+</div>
+</div>
+<!-- KPI 6: Prediction Efficiency -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between shadow-sm relative overflow-hidden group hover:bg-surface-container transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-telemetry-micro text-outline uppercase tracking-wider">SEASON MODEL ACC</span>
+<span class="font-label-mono text-telemetry-micro text-tertiary bg-surface-container px-space-xs py-0.5 rounded">BRIER: 0.182</span>
+</div>
+<div class="my-space-sm flex items-baseline gap-space-xs">
+<span class="font-mono-metric-lg text-mono-metric-lg text-tertiary">68.4%</span>
+<span class="font-label-mono text-telemetry-micro text-outline">/ 1,420 RUNS</span>
+</div>
+<div class="flex items-center justify-between text-telemetry-micro font-label-mono text-on-surface-variant pt-space-xs bg-surface-container-lowest/40 -mx-space-md -mb-space-md px-space-md py-space-xs">
+<span>TOP 3% ACCURACY</span>
+<span class="text-tertiary">CALIBRATED</span>
+</div>
+</div>
+</section>
+<!-- Institutional Disclaimer & Mode Control Banner -->
+<section class="bg-surface-container-low rounded-lg p-space-md flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md shadow-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro font-semibold text-primary uppercase tracking-widest">QUANTITATIVE SYSTEM</span>
+<span class="text-outline text-telemetry-micro font-label-mono">///</span>
+<span class="font-label-mono text-telemetry-micro text-outline uppercase">PROBABILISTIC DIRECTIVES ONLY</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            DEMO DATA // Quantitative Sports Intelligence Engine. Strictly probabilistic telemetry and bayesian projections. Non-betting operational framework.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-stretch md:self-auto bg-surface-container p-space-xs rounded">
+<button class="px-space-md py-1 rounded bg-surface-container-high text-primary font-label-mono text-telemetry-micro font-semibold shadow-sm transition-colors" id="viewProbBtn" onclick="toggleMetricMode('prob')">
+          PROBABILITIES
+        </button>
+<button class="px-space-md py-1 rounded text-outline hover:text-on-surface font-label-mono text-telemetry-micro font-semibold transition-colors" id="viewXgBtn" onclick="toggleMetricMode('xg')">
+          EXPECTED GOALS (xG)
+        </button>
+</div>
+</section>
+<!-- Showcase Section: Today's AI Predictions -->
+<section class="flex flex-col gap-space-md">
+<!-- Section Header & Filter Toolbar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-4 bg-primary rounded-sm"></div>
+<h2 class="font-headline-md text-headline-md text-on-surface">TODAY'S TOP PREDICTIONS</h2>
+<span class="font-label-mono text-telemetry-micro px-space-xs py-0.5 rounded bg-surface-container-high text-outline">PRIORITY FEED (4)</span>
+</div>
+<div class="flex items-center gap-space-xs overflow-x-auto pb-space-xs sm:pb-0">
+<button class="px-space-md py-1 rounded bg-primary text-on-primary font-label-mono text-telemetry-micro font-semibold">ALL FIXTURES</button>
+<button class="px-space-md py-1 rounded bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-mono text-telemetry-micro transition-colors">UCL (1)</button>
+<button class="px-space-md py-1 rounded bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-mono text-telemetry-micro transition-colors">PREMIER LEAGUE (1)</button>
+<button class="px-space-md py-1 rounded bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-mono text-telemetry-micro transition-colors">SERIE A (1)</button>
+<button class="px-space-md py-1 rounded bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-mono text-telemetry-micro transition-colors">CAF (1)</button>
+</div>
+</div>
+<!-- 4-Card Computational Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-space-md">
+<!-- Card A: Arsenal vs Man City -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md flex flex-col justify-between gap-space-md hover:bg-surface-container/60 transition-all">
+<!-- Top League Bar & Engine Metas -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro text-primary uppercase font-semibold">PREMIER LEAGUE</span>
+<span class="text-outline text-telemetry-micro font-label-mono">•</span>
+<span class="font-label-mono text-telemetry-micro text-outline">20:00 UTC</span>
+<span class="text-outline text-telemetry-micro font-label-mono">•</span>
+<span class="font-label-mono text-telemetry-micro text-outline">MATCHDAY 30</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-xs py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-label-mono text-telemetry-micro text-tertiary uppercase">CONFIRMED DATA</span>
+</div>
+</div>
+<!-- Team Clashes Banner -->
+<div class="grid grid-cols-12 items-center gap-space-sm py-space-xs bg-surface-container-lowest/50 rounded p-space-sm">
+<!-- Home Team -->
+<div class="col-span-5 flex items-center gap-space-sm">
+<div class="relative w-11 h-11 rounded-lg overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Arsenal football club crest emblem close up with red and white colors and gold cannon on deep navy gradient background high fidelity sports branding" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYH4a4Cv56_TNkgHNPPDr4hBDwf6PZM7HguJFO7sXLrdWo2Ul4Eu3sMF8iwPmN7yQKDF5yZ0PxinNuJvT63Z9rLb3o_WouqzXAaxGLjypAchpn9LDL8XsR0Zz8f8MHIAmlTuSDURwr8uyn4gtfQx5v_EaZphWj2e-yZNkVUviGGG6YD0GW0BMFOp6FgVaO-2Y62LI-HP0uC4oVN2H47jbjuMzsG65Fstho0tReXj0U"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Arsenal FC</span>
+<span class="font-label-mono text-telemetry-micro px-1 rounded bg-surface-container text-outline">#1</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-mono text-telemetry-micro text-outline ml-1">W-W-D-W</span>
+</div>
+</div>
+</div>
+<!-- VS & Target Matrix -->
+<div class="col-span-2 flex flex-col items-center justify-center">
+<span class="font-label-mono text-telemetry-micro text-outline font-semibold">VS</span>
+<div class="mt-0.5 px-space-xs py-0.5 bg-surface-container rounded font-label-mono text-telemetry-micro text-primary">
+                PRED
+              </div>
+<span class="font-mono-metric-md text-mono-metric-md text-primary font-bold mt-0.5">2 - 1</span>
+</div>
+<!-- Away Team -->
+<div class="col-span-5 flex items-center justify-end gap-space-sm text-right">
+<div class="flex flex-col min-w-0 items-end">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro px-1 rounded bg-surface-container text-outline">#2</span>
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Man City</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="font-label-mono text-telemetry-micro text-outline mr-1">W-W-W-D</span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+</div>
+<div class="relative w-11 h-11 rounded-lg overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Manchester City club badge graphic with celestial sky blue and ship silhouette modern football logo in sleek stadium light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4u_nrPEQ8ZtjG9yFaLX2_84g348tB_pf34Q7Vp9X2efw2vK5t5efNgefAImQKHciwHRGODi1I62as8pegao6xdW6x6cQoZaMbGBlrW1_9IJKd1To0rKHKa92XoNAJfyf13HALiOtyj0ix5xJEN2yGTdsTWffrthkQMbhmgLlD9OBv6OurAkxMYQgLuvyXxOWO4fPoSMH2b_zLbkx_-cww0hvLVpQ6HP5qbnUdUoXX"/>
+</div>
+</div>
+</div>
+<!-- 3-Way 1X2 Continuous Probability Bar -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-mono text-telemetry-micro">
+<span class="text-primary font-semibold">ARS 41.2%</span>
+<span class="text-secondary font-semibold">DRAW 28.5%</span>
+<span class="text-error font-semibold">MCI 30.3%</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container-lowest flex overflow-hidden">
+<div class="bg-primary h-full transition-all duration-500" style="width: 41.2%;"></div>
+<div class="bg-secondary h-full transition-all duration-500" style="width: 28.5%;"></div>
+<div class="bg-error h-full transition-all duration-500" style="width: 30.3%;"></div>
+</div>
+</div>
+<!-- Deep Metrics Pill Grid -->
+<div class="grid grid-cols-3 gap-space-xs bg-surface-container-lowest/30 p-space-xs rounded">
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">OVER 2.5 GOALS</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">64.8%</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">BTTS (YES)</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">69.2%</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">MODEL CONFIDENCE</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-primary">74% HIGH</span>
+</div>
+</div>
+<!-- Telemetry Footer Card -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs font-label-mono text-telemetry-micro text-outline">
+<span>MODEL: V4.2 BAYES-XG</span>
+<span>•</span>
+<span>SYNC 8m AGO</span>
+</div>
+<button class="flex items-center gap-1 text-primary hover:text-on-surface font-label-mono text-telemetry-micro uppercase font-semibold transition-colors">
+<span>DEEP MATCH TELEMETRY</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card B: Real Madrid vs Bayern München -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md flex flex-col justify-between gap-space-md hover:bg-surface-container/60 transition-all">
+<!-- Top League Bar & Engine Metas -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro text-secondary uppercase font-semibold">UEFA CHAMPIONS LEAGUE</span>
+<span class="text-outline text-telemetry-micro font-label-mono">•</span>
+<span class="font-label-mono text-telemetry-micro text-outline">21:00 UTC</span>
+<span class="text-outline text-telemetry-micro font-label-mono">•</span>
+<span class="font-label-mono text-telemetry-micro text-outline">SEMI-FINAL</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-xs py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-label-mono text-telemetry-micro text-tertiary uppercase">CONFIRMED DATA</span>
+</div>
+</div>
+<!-- Team Clashes Banner -->
+<div class="grid grid-cols-12 items-center gap-space-sm py-space-xs bg-surface-container-lowest/50 rounded p-space-sm">
+<!-- Home Team -->
+<div class="col-span-5 flex items-center gap-space-sm">
+<div class="relative w-11 h-11 rounded-lg overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Real Madrid emblem crest badge with iconic crown and royal purple sash on pristine white textured background dramatic cinematic sports render" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-ELGLXh2D4GU5cNTQLBXPiy-8fgfr7qEQEBwVy6jVY--vDQQnISKVfwSvseBFysqEQ5IWRl_XEk4xopu8fohJYLOkgixNR_BBa9bE4cYU0HaK3TLYUO3L7JIqUqzQuZrxOZcQfjuKnZ-D2hOZkTULnJv3NyRldIBpZK120b9G0o2ibaiWVCJCtnWT2byPU-WlNnDkltTaJgzhKzAR5OwPequA-24Rm6XjkQrRp-_0"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Real Madrid</span>
+<span class="font-label-mono text-telemetry-micro px-1 rounded bg-tertiary-container/40 text-tertiary">+2d REST</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-mono text-telemetry-micro text-outline ml-1">W-W-W-W</span>
+</div>
+</div>
+</div>
+<!-- VS & Target Matrix -->
+<div class="col-span-2 flex flex-col items-center justify-center">
+<span class="font-label-mono text-telemetry-micro text-outline font-semibold">VS</span>
+<div class="mt-0.5 px-space-xs py-0.5 bg-surface-container rounded font-label-mono text-telemetry-micro text-primary">
+                PRED
+              </div>
+<span class="font-mono-metric-md text-mono-metric-md text-primary font-bold mt-0.5">3 - 1</span>
+</div>
+<!-- Away Team -->
+<div class="col-span-5 flex items-center justify-end gap-space-sm text-right">
+<div class="flex flex-col min-w-0 items-end">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro px-1 rounded bg-surface-container text-outline">TIER-1</span>
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Bayern München</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="font-label-mono text-telemetry-micro text-outline mr-1">D-W-L-W</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+</div>
+<div class="relative w-11 h-11 rounded-lg overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="FC Bayern Munchen football crest badge with deep red bavarian diamond center shield professional athletic club aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmp9_pK07CM8bTsA6cDtIMREL7EULwM7_v8dhFhRFI2rSZvnsh_rRxFWcD790rzI2bwXGj0sHm0uyrl7wAFZKhcuIAfY1rq0RofYeLlRvpmOKz4GsFVvjJ7jkuDDUV1gyIRYb0fAiZPe5DXQNkg3mZRuwAj80kPK0t0312O_OYaysF1J3D994LwrGPqrrMosylcO1Rsmbtk8hkZLtwOrUUzJS6q-80Zo1jipFhsaAn"/>
+</div>
+</div>
+</div>
+<!-- 3-Way 1X2 Continuous Probability Bar -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-mono text-telemetry-micro">
+<span class="text-primary font-semibold">RMA 52.4%</span>
+<span class="text-secondary font-semibold">DRAW 24.1%</span>
+<span class="text-error font-semibold">BAY 23.5%</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container-lowest flex overflow-hidden">
+<div class="bg-primary h-full transition-all duration-500" style="width: 52.4%;"></div>
+<div class="bg-secondary h-full transition-all duration-500" style="width: 24.1%;"></div>
+<div class="bg-error h-full transition-all duration-500" style="width: 23.5%;"></div>
+</div>
+</div>
+<!-- Deep Metrics Pill Grid -->
+<div class="grid grid-cols-3 gap-space-xs bg-surface-container-lowest/30 p-space-xs rounded">
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">OVER 2.5 GOALS</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">78.1%</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">BTTS (YES)</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">72.0%</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">CONFIDENCE</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">81% V.HIGH</span>
+</div>
+</div>
+<!-- Telemetry Footer Card -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs font-label-mono text-telemetry-micro text-outline">
+<span>MODEL: V4.2 BAYES-XG</span>
+<span>•</span>
+<span>SYNC 14m AGO</span>
+</div>
+<button class="flex items-center gap-1 text-primary hover:text-on-surface font-label-mono text-telemetry-micro uppercase font-semibold transition-colors">
+<span>DEEP MATCH TELEMETRY</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card C: Inter Milan vs Juventus -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md flex flex-col justify-between gap-space-md hover:bg-surface-container/60 transition-all">
+<!-- Top League Bar & Engine Metas -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro text-primary uppercase font-semibold">SERIE A</span>
+<span class="text-outline text-telemetry-micro font-label-mono">•</span>
+<span class="font-label-mono text-telemetry-micro text-outline">18:45 UTC</span>
+<span class="text-outline text-telemetry-micro font-label-mono">•</span>
+<span class="font-label-mono text-telemetry-micro text-outline">DERBY D'ITALIA</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-xs py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-mono text-telemetry-micro text-secondary uppercase">ESTIMATED (INJURY REPORT)</span>
+</div>
+</div>
+<!-- Team Clashes Banner -->
+<div class="grid grid-cols-12 items-center gap-space-sm py-space-xs bg-surface-container-lowest/50 rounded p-space-sm">
+<!-- Home Team -->
+<div class="col-span-5 flex items-center gap-space-sm">
+<div class="relative w-11 h-11 rounded-lg overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Inter Milan modern minimalist monogram badge in electric blue and intense black on clean futuristic sporting background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoZx_cGWx_mB1rWU71vgLfxcWLckOy5-WTBkmhKBcCDUOk2JcJjmQOgfz-geJJqqDwHE--LCOd1An_fmjXlH3plhMsJ7RfloZPk8Zhb1rxIdjRw5zJB8G2KJDna0g93jekEV6KYitS6B3AtQ6_AWMocTiXcTKlSQraWnaiX33E5D8_CfKc69vGMp_NMg0vsJEWz-8q1t19Ii9Mxob1qKwZHDNtW66_4OziyuFUVEFf"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Inter Milan</span>
+<span class="font-label-mono text-telemetry-micro px-1 rounded bg-surface-container text-outline">#1</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-mono text-telemetry-micro text-outline ml-1">W-W-W-D</span>
+</div>
+</div>
+</div>
+<!-- VS & Target Matrix -->
+<div class="col-span-2 flex flex-col items-center justify-center">
+<span class="font-label-mono text-telemetry-micro text-outline font-semibold">VS</span>
+<div class="mt-0.5 px-space-xs py-0.5 bg-surface-container rounded font-label-mono text-telemetry-micro text-primary">
+                PRED
+              </div>
+<span class="font-mono-metric-md text-mono-metric-md text-primary font-bold mt-0.5">1 - 0</span>
+</div>
+<!-- Away Team -->
+<div class="col-span-5 flex items-center justify-end gap-space-sm text-right">
+<div class="flex flex-col min-w-0 items-end">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro px-1 rounded bg-surface-container text-outline">#3</span>
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Juventus</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="font-label-mono text-telemetry-micro text-outline mr-1">D-W-D-W</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+</div>
+<div class="relative w-11 h-11 rounded-lg overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Juventus minimalist modern J logo crest in stark zebra monochrome black and white on dark titanium textured surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgHRAEIHVSzOHLTviOvGrmII1MchdRxj4F1Q-CU2oDIqdCDgAsF4Od8D8RfWfQxnHoc9-8bYkwhxYsINa_jFibQMRA1bjIR9iSFscdhvePJEF15srneUrYrMkS_YfYpvduPcBse2539hlqHTxVwUOO1dXnGq2hYvrvb6xuxStE7KYmK8XUG1TmCut-AfVWc_jge6aDyBgpMnpOI3nE2XsOfqYu4cqbW6OGsCleqriZ"/>
+</div>
+</div>
+</div>
+<!-- 3-Way 1X2 Continuous Probability Bar -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-mono text-telemetry-micro">
+<span class="text-primary font-semibold">INT 48.0%</span>
+<span class="text-secondary font-semibold">DRAW 32.2%</span>
+<span class="text-error font-semibold">JUV 19.8%</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container-lowest flex overflow-hidden">
+<div class="bg-primary h-full transition-all duration-500" style="width: 48.0%;"></div>
+<div class="bg-secondary h-full transition-all duration-500" style="width: 32.2%;"></div>
+<div class="bg-error h-full transition-all duration-500" style="width: 19.8%;"></div>
+</div>
+</div>
+<!-- Deep Metrics Pill Grid -->
+<div class="grid grid-cols-3 gap-space-xs bg-surface-container-lowest/30 p-space-xs rounded">
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">UNDER 2.5 GOALS</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">67.4%</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">CLEAN SHEET INT</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">54.0%</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">CONFIDENCE</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-secondary">69% MED</span>
+</div>
+</div>
+<!-- Telemetry Footer Card -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs font-label-mono text-telemetry-micro text-outline">
+<span>MODEL: V4.2 TACTICAL-DEF</span>
+<span>•</span>
+<span>SYNC 21m AGO</span>
+</div>
+<button class="flex items-center gap-1 text-primary hover:text-on-surface font-label-mono text-telemetry-micro uppercase font-semibold transition-colors">
+<span>DEEP MATCH TELEMETRY</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card D: Al Ahly vs Espérance de Tunis -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md flex flex-col justify-between gap-space-md hover:bg-surface-container/60 transition-all">
+<!-- Top League Bar & Engine Metas -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro text-tertiary uppercase font-semibold">CAF CHAMPIONS LEAGUE</span>
+<span class="text-outline text-telemetry-micro font-label-mono">•</span>
+<span class="font-label-mono text-telemetry-micro text-outline">19:30 UTC</span>
+<span class="text-outline text-telemetry-micro font-label-mono">•</span>
+<span class="font-label-mono text-telemetry-micro text-outline">FINAL 2ND LEG</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container px-space-xs py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-label-mono text-telemetry-micro text-tertiary uppercase">CONFIRMED DATA</span>
+</div>
+</div>
+<!-- Team Clashes Banner -->
+<div class="grid grid-cols-12 items-center gap-space-sm py-space-xs bg-surface-container-lowest/50 rounded p-space-sm">
+<!-- Home Team -->
+<div class="col-span-5 flex items-center gap-space-sm">
+<div class="relative w-11 h-11 rounded-lg overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Al Ahly SC sports emblem crest with iconic red eagle symbol and championship gold stars set against subtle tactical pitch lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXMEI567c5ip9mtvst53GLO8VzMcZEK6HCAvTe0KPI2mARxeF8y5To8K6nKUiXfXQeVbVxzenW_ZVDfGPGCbVg0KW0cREQqDd6xu5fWUyEQbw6XCmnhpJR9n6wyLtrY4dsdJt8RSwdNnxi1Mcje0wfYt_tjOTRJWGAuijv5rt4FffZypbwZmr1woIF5RLM3oBcslkOu0tCvPTERMqdZLWYTl_mHkG7Bzo_ejRXMR1g"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Al Ahly</span>
+<span class="font-label-mono text-telemetry-micro px-1 rounded bg-surface-container text-outline">1ST LEG 0-0</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-mono text-telemetry-micro text-outline ml-1">W-W-W-D</span>
+</div>
+</div>
+</div>
+<!-- VS & Target Matrix -->
+<div class="col-span-2 flex flex-col items-center justify-center">
+<span class="font-label-mono text-telemetry-micro text-outline font-semibold">VS</span>
+<div class="mt-0.5 px-space-xs py-0.5 bg-surface-container rounded font-label-mono text-telemetry-micro text-primary">
+                PRED
+              </div>
+<span class="font-mono-metric-md text-mono-metric-md text-primary font-bold mt-0.5">2 - 0</span>
+</div>
+<!-- Away Team -->
+<div class="col-span-5 flex items-center justify-end gap-space-sm text-right">
+<div class="flex flex-col min-w-0 items-end">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-telemetry-micro px-1 rounded bg-surface-container text-outline">TUNISIA</span>
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Espérance ST</span>
+</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="font-label-mono text-telemetry-micro text-outline mr-1">D-D-W-D</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+</div>
+<div class="relative w-11 h-11 rounded-lg overflow-hidden bg-surface-container-high flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Esperance Sportive de Tunis football crest badge with red and yellow blood and gold stripes on sleek minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp4Svo7zBovTD7tsLvFmz24jJLHrp-2szL5PWaDw3091Ljo9QfiJmPBRvLQhs_Pox3cH5NsPIiXPcPdwqkBwnwpKZ0hqDrI5bTkEkUoRkIegF7-2spcZmDyjN0JX79f5DSesHJSEm6AAu5K5ZdivJkNWUaG3BGuQWDxZday-W_8mzWnfjNtir5hnPJi7tkt1SXr3jDGmyMge0HYGEP8OEF9QJUFy46fZavNy6xopNW"/>
+</div>
+</div>
+</div>
+<!-- 3-Way 1X2 Continuous Probability Bar -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label-mono text-telemetry-micro">
+<span class="text-primary font-semibold">AHL 58.6%</span>
+<span class="text-secondary font-semibold">DRAW 27.2%</span>
+<span class="text-error font-semibold">EST 14.2%</span>
+</div>
+<div class="w-full h-2 rounded bg-surface-container-lowest flex overflow-hidden">
+<div class="bg-primary h-full transition-all duration-500" style="width: 58.6%;"></div>
+<div class="bg-secondary h-full transition-all duration-500" style="width: 27.2%;"></div>
+<div class="bg-error h-full transition-all duration-500" style="width: 14.2%;"></div>
+</div>
+</div>
+<!-- Deep Metrics Pill Grid -->
+<div class="grid grid-cols-3 gap-space-xs bg-surface-container-lowest/30 p-space-xs rounded">
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">WIN TO NIL</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">49.2%</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">UNDER 2.5 GOALS</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-tertiary">63.1%</span>
+</div>
+<div class="flex flex-col items-center justify-center p-space-xs bg-surface-container-high/40 rounded">
+<span class="font-label-mono text-telemetry-micro text-outline">CONFIDENCE</span>
+<span class="font-mono-metric-sm text-mono-metric-sm text-primary">77% HIGH</span>
+</div>
+</div>
+<!-- Telemetry Footer Card -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs font-label-mono text-telemetry-micro text-outline">
+<span>MODEL: V4.2 CONTINENTAL-DOM</span>
+<span>•</span>
+<span>SYNC 4m AGO</span>
+</div>
+<button class="flex items-center gap-1 text-primary hover:text-on-surface font-label-mono text-telemetry-micro uppercase font-semibold transition-colors">
+<span>DEEP MATCH TELEMETRY</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Secondary Multi-Panel Analytical Matrix (Split Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Live In-Play Momentum & Simulation -->
+<section class="lg:col-span-7 bg-surface-container-low rounded-lg p-space-md shadow-sm flex flex-col justify-between gap-space-md">
+<!-- Live Header Bar -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center gap-space-xs bg-error-container/30 text-error px-space-xs py-0.5 rounded font-label-mono text-telemetry-micro">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>
+              LIVE BROADCAST FEED
+            </span>
+<span class="font-headline-sm text-body-sm text-on-surface">La Liga: Real Sociedad vs Athletic Club</span>
+</div>
+<span class="font-mono-metric-md text-mono-metric-md text-error font-semibold">68' [2H]</span>
+</div>
+<!-- Live Clash Metrics Banner -->
+<div class="bg-surface-container-lowest/60 rounded p-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-md text-headline-md text-on-surface">Real Sociedad</span>
+<div class="flex items-center gap-1 text-telemetry-micro font-label-mono">
+<span class="w-2.5 h-3.5 bg-yellow-400 rounded-sm inline-block"></span>
+<span class="text-outline">1</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-mono-metric-lg text-mono-metric-lg text-on-surface tracking-widest font-bold">1 - 1</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1 text-telemetry-micro font-label-mono">
+<span class="w-2.5 h-3.5 bg-yellow-400 rounded-sm inline-block"></span>
+<span class="text-outline">2</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface">Athletic Club</span>
+</div>
+</div>
+<!-- Real-Time Pressure / Momentum SVG Sparkline -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between font-label-mono text-telemetry-micro text-outline">
+<span>MOMENTUM TIMELINE (0' - 68')</span>
+<span class="text-tertiary">SOC DOMINATING LATTER HALF</span>
+</div>
+<div class="h-16 w-full relative">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 400 60">
+<defs>
+<lineargradient id="momentumGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4edea3" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#4edea3" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Zero Line -->
+<line stroke="#424754" stroke-dasharray="2 2" stroke-width="1" x1="0" x2="400" y1="30" y2="30"></line>
+<!-- Fill Area -->
+<path d="M 0 30 Q 30 10, 60 25 T 120 45 T 180 20 T 240 38 T 300 12 T 360 15 L 400 8 L 400 30 Z" fill="url(#momentumGradient)"></path>
+<!-- Line -->
+<path d="M 0 30 Q 30 10, 60 25 T 120 45 T 180 20 T 240 38 T 300 12 T 360 15 L 400 8" fill="none" stroke="#4edea3" stroke-width="2"></path>
+<!-- Current Head Beacon -->
+<circle class="animate-pulse" cx="400" cy="8" fill="#4edea3" r="4"></circle>
+</svg>
+</div>
+</div>
+<!-- Split Detailed Statistics Matrix -->
+<div class="grid grid-cols-3 gap-gutter font-label-mono text-telemetry-micro pt-space-xs">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-outline">
+<span>1.42</span><span>LIVE xG</span><span>0.98</span>
+</div>
+<div class="h-1 bg-surface-container rounded flex overflow-hidden">
+<div class="bg-primary h-full" style="width: 59%;"></div>
+<div class="bg-secondary h-full" style="width: 41%;"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-outline">
+<span>14 (6)</span><span>SHOTS (ON)</span><span>8 (3)</span>
+</div>
+<div class="h-1 bg-surface-container rounded flex overflow-hidden">
+<div class="bg-primary h-full" style="width: 63%;"></div>
+<div class="bg-secondary h-full" style="width: 37%;"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-outline">
+<span>58%</span><span>POSSESSION</span><span>42%</span>
+</div>
+<div class="h-1 bg-surface-container rounded flex overflow-hidden">
+<div class="bg-primary h-full" style="width: 58%;"></div>
+<div class="bg-secondary h-full" style="width: 42%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Model Bayesian Re-computation -->
+<div class="flex items-center justify-between bg-surface-container p-space-sm rounded">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">neurology</span>
+<div class="flex flex-col">
+<span class="font-label-mono text-telemetry-micro text-on-surface font-semibold">RE-CALCULATED IN-PLAY MODEL:</span>
+<span class="font-label-mono text-telemetry-micro text-outline">SOC Win 47.1% | Draw 38.4% | ATH Win 14.5%</span>
+</div>
+</div>
+<button class="px-space-md py-1 rounded bg-surface-container-high text-primary hover:text-on-surface font-label-mono text-telemetry-micro font-semibold transition-colors">
+            OPEN SIMULATION LAB
+          </button>
+</div>
+</section>
+<!-- Right Column: AI Agent Heartbeat & Operations Center -->
+<section class="lg:col-span-5 bg-surface-container-low rounded-lg p-space-md shadow-sm flex flex-col justify-between gap-space-md">
+<!-- Agent Hub Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[18px]">memory</span>
+<span class="font-headline-sm text-body-sm text-on-surface">AUTONOMOUS ENGINE HEARTBEAT</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-mono text-telemetry-micro bg-surface-container px-space-xs py-0.5 rounded">
+<span class="text-tertiary font-bold">142</span>
+<span class="text-outline">OPS/SEC</span>
+</div>
+</div>
+<!-- 7 Agent Grid Registry -->
+<div class="flex flex-col gap-1.5">
+<!-- Agent 1 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-lowest/50 rounded font-label-mono text-telemetry-micro">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-on-surface font-medium">AGENT-01 // Data Ingestion</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline">
+<span>SportMonks/Opta</span>
+<span class="text-tertiary">0.02s</span>
+</div>
+</div>
+<!-- Agent 2 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-lowest/50 rounded font-label-mono text-telemetry-micro">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-on-surface font-medium">AGENT-02 // Player Biometrics &amp; Roster</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline">
+<span>Fatigue/Injuries</span>
+<span class="text-tertiary">SYNC</span>
+</div>
+</div>
+<!-- Agent 3 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-lowest/50 rounded font-label-mono text-telemetry-micro">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-on-surface font-medium">AGENT-03 // Tactical Form &amp; Style</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline">
+<span>PPDA / High-Press</span>
+<span class="text-tertiary">ACTIVE</span>
+</div>
+</div>
+<!-- Agent 4 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-lowest/50 rounded font-label-mono text-telemetry-micro">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-on-surface font-medium">AGENT-04 // Bayesian Pred Engine</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline">
+<span>v4.2-Neural</span>
+<span class="text-tertiary">98.9% CONF</span>
+</div>
+</div>
+<!-- Agent 5 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-lowest/50 rounded font-label-mono text-telemetry-micro">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-on-surface font-medium">AGENT-05 // Head-to-Head Comparator</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline">
+<span>Historic Matched</span>
+<span class="text-tertiary">10-YR DB</span>
+</div>
+</div>
+<!-- Agent 6 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-lowest/50 rounded font-label-mono text-telemetry-micro">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-on-surface font-medium">AGENT-06 // Quality &amp; Anomaly Filter</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline">
+<span>0 Outliers Flagged</span>
+<span class="text-tertiary">STABLE</span>
+</div>
+</div>
+<!-- Agent 7 -->
+<div class="flex items-center justify-between p-space-xs bg-surface-container-lowest/50 rounded font-label-mono text-telemetry-micro">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-on-surface font-medium">AGENT-07 // Continuous Loss Learner</span>
+</div>
+<div class="flex items-center gap-space-sm text-outline">
+<span>Backprop Cycle</span>
+<span class="text-tertiary">ONLINE</span>
+</div>
+</div>
+</div>
+<!-- Terminal Status Bar -->
+<div class="flex items-center justify-between pt-space-xs bg-surface-container-lowest/30 p-space-xs rounded">
+<div class="flex items-center gap-space-xs font-label-mono text-telemetry-micro text-outline">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>7/7 WORKERS OPERATIONAL</span>
+</div>
+<span class="font-label-mono text-telemetry-micro text-primary">LATENCY: 48ms</span>
+</div>
+</section>
+</div>
+<!-- Persistent Compliance & Engine Metadata Footer -->
+<footer class="mt-space-md py-space-sm flex flex-col md:flex-row items-center justify-between gap-space-sm border-t border-outline-variant/20 font-label-mono text-telemetry-micro text-outline">
+<div class="flex items-center gap-space-md">
+<span>DEMO DATA // PROBABILISTIC MODEL - NOT BETTING ADVICE</span>
+<span>•</span>
+<span>ENTERPRISE QUANT ARCHITECTURE v4.2</span>
+</div>
+<div class="flex items-center gap-space-lg text-on-surface-variant">
+<span>SportMonks / StatsBomb Sync: Validated</span>
+<span>CRC-32 Checksum: 0x9B4E38A1</span>
+</div>
+</footer>
+</div>
+</div>
+<script>
+  function toggleMetricMode(mode) {
+    const probBtn = document.getElementById('viewProbBtn');
+    const xgBtn = document.getElementById('viewXgBtn');
+
+    if (mode === 'prob') {
+      probBtn.className = 'px-space-md py-1 rounded bg-surface-container-high text-primary font-label-mono text-telemetry-micro font-semibold shadow-sm transition-colors';
+      xgBtn.className = 'px-space-md py-1 rounded text-outline hover:text-on-surface font-label-mono text-telemetry-micro font-semibold transition-colors';
+    } else {
+      xgBtn.className = 'px-space-md py-1 rounded bg-surface-container-high text-primary font-label-mono text-telemetry-micro font-semibold shadow-sm transition-colors';
+      probBtn.className = 'px-space-md py-1 rounded text-outline hover:text-on-surface font-label-mono text-telemetry-micro font-semibold transition-colors';
+    }
+  }
+</script></main></div></body></html>

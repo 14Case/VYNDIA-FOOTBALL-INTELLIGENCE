@@ -1,3 +1,0 @@
-[install]
-# Composer needs the alchemy binary and deployable builds cannot contain symlinks.
-linker = "hoisted"

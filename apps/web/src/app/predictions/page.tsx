@@ -6,9 +6,13 @@ import { StatusChip } from "@/components/ui/StatusChip";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { MetricCard } from "@/components/ui/MetricCard";
-import { DEMO_MATCHES, DEMO_SYSTEM_METRICS } from "@/data/demo-data";
+import { DEMO_SYSTEM_METRICS } from "@/data/demo-data";
+import { getPredictionsData, EnrichedPrediction } from "@/lib/football-data";
+import { MatchSimulator } from "@/components/prediction/MatchSimulator";
 
-export default function PredictionsPage() {
+export default async function PredictionsPage() {
+  const predictions: EnrichedPrediction[] = await getPredictionsData();
+
   return (
     <AppShell>
       {/* Header */}
@@ -55,11 +59,11 @@ export default function PredictionsPage() {
         />
         <MetricCard
           title="Active Predictions"
-          value={DEMO_MATCHES.length}
+          value={predictions.length}
           delta="VERIFIED"
           deltaType="neutral"
           subtitle="Tier-1 European fixtures"
-          sparklineData={[2, 3, 4, 4, 4]}
+          sparklineData={[2, 3, 4, 5, predictions.length]}
         />
         <MetricCard
           title="Inference Latency"
@@ -71,32 +75,49 @@ export default function PredictionsPage() {
         />
       </div>
 
+      {/* Interactive Match Simulator Component */}
+      <MatchSimulator />
+
       {/* Predictions Deep Table */}
       <div className="rounded-lg bg-[#121A2D] border border-[#1E2D4A] p-4 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xs font-mono font-bold text-[#F8FAFC] uppercase tracking-wider">
-            Active Fixture Projections
-          </h2>
-          <span className="text-[11px] font-mono text-[#64748B]">Model: v4.2-NEURAL-HYBRID</span>
+          <div className="flex items-center gap-2">
+            <h2 className="text-xs font-mono font-bold text-[#F8FAFC] uppercase tracking-wider">
+              Active Fixture Projections & Market Arbitrage
+            </h2>
+            <Badge variant="blue">{predictions.length} MATCHES COMPUTED</Badge>
+          </div>
+          <span className="text-[11px] font-mono text-[#64748B]">Supabase Live Sync</span>
         </div>
 
         <div className="space-y-3">
-          {DEMO_MATCHES.map((match) => (
+          {predictions.map((pred) => (
             <div
-              key={match.id}
+              key={pred.id}
               className="p-3.5 rounded bg-[#0D1322] border border-[#1E2D4A] hover:border-[#2A3C60] transition-all grid grid-cols-1 lg:grid-cols-12 gap-4 items-center"
             >
               {/* Fixture & Competition */}
               <div className="lg:col-span-4 space-y-1">
                 <div className="flex items-center gap-2">
-                  <Badge variant="blue">{match.competitionCode}</Badge>
-                  <StatusChip status={match.status} label={match.status === "LIVE" ? `${match.minute}' LIVE` : "UPCOMING"} />
+                  <Badge variant="blue">{pred.competitionCode}</Badge>
+                  <StatusChip
+                    status={pred.status === "LIVE" ? "LIVE" : "UPCOMING"}
+                    label={pred.status === "LIVE" ? "LIVE" : "UPCOMING"}
+                  />
+                  <span className="text-[10px] font-mono text-[#64748B]">{pred.modelName}</span>
                 </div>
                 <div className="text-sm font-semibold text-[#F8FAFC]">
-                  {match.homeTeam.name} vs {match.awayTeam.name}
+                  {pred.homeTeam.name} vs {pred.awayTeam.name}
                 </div>
-                <div className="text-[10px] font-mono text-[#64748B]">
-                  {match.venue}
+                <div className="text-[10px] font-mono text-[#64748B] flex items-center gap-2">
+                  <span>{pred.venue}</span>
+                  <span>•</span>
+                  <span>
+                    Fair Odds:{" "}
+                    <span className="text-[#38BDF8]">{pred.fairOdds.home.toFixed(2)}</span> /{" "}
+                    <span className="text-[#94A3B8]">{pred.fairOdds.draw.toFixed(2)}</span> /{" "}
+                    <span className="text-[#F43F5E]">{pred.fairOdds.away.toFixed(2)}</span>
+                  </span>
                 </div>
               </div>
 
@@ -104,31 +125,36 @@ export default function PredictionsPage() {
               <div className="lg:col-span-4">
                 <div className="text-[10px] font-mono text-[#94A3B8] mb-1 flex justify-between">
                   <span>PROBABILITY VECTOR</span>
-                  <span className="text-[#34D399]">Confidence: {match.probabilities.confidence}%</span>
+                  <span className="text-[#34D399]">Confidence: {pred.probabilities.confidence}%</span>
                 </div>
                 <ProbabilityBar
-                  homeWin={match.probabilities.homeWin}
-                  draw={match.probabilities.draw}
-                  awayWin={match.probabilities.awayWin}
-                  homeLabel={match.homeTeam.code}
-                  awayLabel={match.awayTeam.code}
+                  homeWin={pred.probabilities.homeWin}
+                  draw={pred.probabilities.draw}
+                  awayWin={pred.probabilities.awayWin}
+                  homeLabel={pred.homeTeam.code}
+                  awayLabel={pred.awayTeam.code}
                 />
               </div>
 
               {/* Edge & Expected Value */}
               <div className="lg:col-span-3 text-xs font-mono space-y-1">
-                <div className="text-[10px] text-[#64748B] uppercase">EDGE DISCOVERY</div>
+                <div className="text-[10px] text-[#64748B] uppercase flex items-center justify-between">
+                  <span>EDGE DISCOVERY</span>
+                  {pred.marketOdds && (
+                    <span className="text-[#38BDF8]">{pred.marketOdds.source} @{pred.marketOdds.home.toFixed(2)}</span>
+                  )}
+                </div>
                 <div className="text-[#34D399] font-bold text-xs">
-                  {match.predictionSummary?.edge || "+3.5% EV on Home Win"}
+                  {pred.edge?.text ?? "+3.5% EV on Home Win"}
                 </div>
                 <div className="text-[10px] text-[#CBD5E1] truncate">
-                  {match.predictionSummary?.verdict || "Statistical divergence detected"}
+                  {pred.edge?.verdict ?? "Statistical divergence detected"}
                 </div>
               </div>
 
               {/* Action Button */}
               <div className="lg:col-span-1 flex lg:justify-end">
-                <Link href={`/matches/${match.id}`}>
+                <Link href={`/matches/${pred.fixtureId}`}>
                   <Button variant="secondary" size="sm">
                     Inspect
                   </Button>

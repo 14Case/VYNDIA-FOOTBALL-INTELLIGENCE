@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #090D16;
+  --foreground: #CBD5E1;
+  --surface-frame: #0D1322;
+  --surface-card: #121A2D;
+  --surface-card-hover: #162035;
+  --border-resting: #1E2D4A;
+  --border-focus: #2A3C60;
+  --primary-blue: #3B82F6;
+  --primary-blue-glow: #60A5FA;
+  --quantum-violet: #8B5CF6;
+  --quantum-violet-glow: #A78BFA;
+  --status-positive: #10B981;
+  --status-positive-text: #34D399;
+  --status-neutral: #F59E0B;
+  --status-negative: #EF4444;
+  --status-negative-text: #F87171;
+  --text-heading: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+}
+
+body {
+  background-color: #090D16;
+  color: #CBD5E1;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbars for high-density terminal look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090D16;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E2D4A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2A3C60;
+}

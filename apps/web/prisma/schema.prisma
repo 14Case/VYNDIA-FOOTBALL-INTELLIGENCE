@@ -1,0 +1,295 @@
+// Vyndia Football Intelligence — Prisma Schema
+// https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  ANALYST
+  VIEWER
+}
+
+enum FixtureStatus {
+  SCHEDULED
+  LIVE
+  FINISHED
+  POSTPONED
+  CANCELLED
+}
+
+enum CompetitionType {
+  LEAGUE
+  CUP
+  FRIENDLY
+  INTERNATIONAL
+}
+
+enum Position {
+  GOALKEEPER
+  DEFENDER
+  MIDFIELDER
+  FORWARD
+}
+
+enum SyncStatus {
+  PENDING
+  IN_PROGRESS
+  SUCCESS
+  FAILED
+}
+
+// ─── User (linked to Supabase Auth) ─────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(VIEWER)
+  avatarUrl String?  @map("avatar_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+// ─── Geography ───────────────────────────────────────────────────────────────
+
+model Country {
+  id      String  @id @default(cuid())
+  name    String  @unique
+  code    String  @unique @db.Char(3)
+  flagUrl String? @map("flag_url")
+
+  competitions Competition[]
+  teams        Team[]
+
+  @@map("countries")
+}
+
+// ─── Competition & Seasons ───────────────────────────────────────────────────
+
+model Competition {
+  id        String          @id @default(cuid())
+  name      String
+  shortName String?         @map("short_name")
+  logoUrl   String?         @map("logo_url")
+  countryId String          @map("country_id")
+  type      CompetitionType @default(LEAGUE)
+
+  country  Country   @relation(fields: [countryId], references: [id])
+  seasons  Season[]
+  fixtures Fixture[]
+
+  @@index([countryId])
+  @@map("competitions")
+}
+
+model Season {
+  id            String   @id @default(cuid())
+  competitionId String   @map("competition_id")
+  name          String
+  startDate     DateTime @map("start_date")
+  endDate       DateTime @map("end_date")
+  isCurrent     Boolean  @default(false) @map("is_current")
+
+  competition Competition  @relation(fields: [competitionId], references: [id])
+  fixtures    Fixture[]
+  rosters     TeamRoster[]
+
+  @@unique([competitionId, name])
+  @@index([competitionId])
+  @@map("seasons")
+}
+
+// ─── Teams & Players ─────────────────────────────────────────────────────────
+
+model Team {
+  id          String  @id @default(cuid())
+  name        String
+  shortName   String? @map("short_name")
+  logoUrl     String? @map("logo_url")
+  countryId   String  @map("country_id")
+  foundedYear Int?    @map("founded_year")
+
+  country      Country      @relation(fields: [countryId], references: [id])
+  rosters      TeamRoster[]
+  homeFixtures Fixture[]    @relation("HomeTeam")
+  awayFixtures Fixture[]    @relation("AwayTeam")
+
+  @@index([countryId])
+  @@map("teams")
+}
+
+model Player {
+  id          String    @id @default(cuid())
+  firstName   String    @map("first_name")
+  lastName    String    @map("last_name")
+  displayName String    @map("display_name")
+  position    Position?
+  nationality String?
+  dateOfBirth DateTime? @map("date_of_birth")
+  imageUrl    String?   @map("image_url")
+
+  rosters TeamRoster[]
+
+  @@index([lastName])
+  @@map("players")
+}
+
+model TeamRoster {
+  id           String    @id @default(cuid())
+  teamId       String    @map("team_id")
+  playerId     String    @map("player_id")
+  seasonId     String    @map("season_id")
+  jerseyNumber Int?      @map("jersey_number")
+  joinDate     DateTime? @map("join_date")
+  leaveDate    DateTime? @map("leave_date")
+
+  team   Team   @relation(fields: [teamId], references: [id])
+  player Player @relation(fields: [playerId], references: [id])
+  season Season @relation(fields: [seasonId], references: [id])
+
+  @@unique([teamId, playerId, seasonId])
+  @@index([teamId])
+  @@index([playerId])
+  @@index([seasonId])
+  @@map("team_rosters")
+}
+
+// ─── Fixtures & Results ──────────────────────────────────────────────────────
+
+model Fixture {
+  id            String        @id @default(cuid())
+  competitionId String        @map("competition_id")
+  seasonId      String        @map("season_id")
+  homeTeamId    String        @map("home_team_id")
+  awayTeamId    String        @map("away_team_id")
+  matchday      Int?
+  scheduledAt   DateTime      @map("scheduled_at")
+  venue         String?
+  status        FixtureStatus @default(SCHEDULED)
+
+  competition      Competition       @relation(fields: [competitionId], references: [id])
+  season           Season            @relation(fields: [seasonId], references: [id])
+  homeTeam         Team              @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam         Team              @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  result           MatchResult?
+  predictions      Prediction[]
+  predictionMarket PredictionMarket[]
+
+  @@index([competitionId])
+  @@index([seasonId])
+  @@index([homeTeamId])
+  @@index([awayTeamId])
+  @@index([scheduledAt])
+  @@index([status])
+  @@map("fixtures")
+}
+
+model MatchResult {
+  id           String @id @default(cuid())
+  fixtureId    String @unique @map("fixture_id")
+  homeScore    Int    @map("home_score")
+  awayScore    Int    @map("away_score")
+  halfTimeHome Int?   @map("half_time_home")
+  halfTimeAway Int?   @map("half_time_away")
+  attendance   Int?
+
+  fixture Fixture @relation(fields: [fixtureId], references: [id])
+
+  @@map("match_results")
+}
+
+// ─── Data Collection ─────────────────────────────────────────────────────────
+
+model DataProvider {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  apiEndpoint String?   @map("api_endpoint")
+  isActive    Boolean   @default(true) @map("is_active")
+  lastSyncAt  DateTime? @map("last_sync_at")
+
+  collectionLogs CollectionLog[]
+
+  @@map("data_providers")
+}
+
+model CollectionLog {
+  id               String     @id @default(cuid())
+  dataProviderId   String     @map("data_provider_id")
+  entityType       String     @map("entity_type")
+  recordsCollected Int        @default(0) @map("records_collected")
+  status           SyncStatus @default(PENDING)
+  startedAt        DateTime   @default(now()) @map("started_at")
+  completedAt      DateTime?  @map("completed_at")
+  errorMessage     String?    @map("error_message")
+
+  dataProvider DataProvider @relation(fields: [dataProviderId], references: [id])
+
+  @@index([dataProviderId])
+  @@index([status])
+  @@map("collection_logs")
+}
+
+// ─── Predictions & ML ────────────────────────────────────────────────────────
+
+model ModelVersion {
+  id         String   @id @default(cuid())
+  name       String
+  version    String
+  algorithm  String?
+  accuracy   Float?
+  trainedAt  DateTime @default(now()) @map("trained_at")
+  isActive   Boolean  @default(false) @map("is_active")
+  parameters Json?
+
+  predictions Prediction[]
+
+  @@unique([name, version])
+  @@map("model_versions")
+}
+
+model Prediction {
+  id             String   @id @default(cuid())
+  fixtureId      String   @map("fixture_id")
+  modelVersionId String   @map("model_version_id")
+  homeWinProb    Float    @map("home_win_prob")
+  drawProb       Float    @map("draw_prob")
+  awayWinProb    Float    @map("away_win_prob")
+  predictedAt    DateTime @default(now()) @map("predicted_at")
+  confidence     Float?
+
+  fixture      Fixture      @relation(fields: [fixtureId], references: [id])
+  modelVersion ModelVersion @relation(fields: [modelVersionId], references: [id])
+
+  @@unique([fixtureId, modelVersionId])
+  @@index([fixtureId])
+  @@index([modelVersionId])
+  @@map("predictions")
+}
+
+model PredictionMarket {
+  id          String   @id @default(cuid())
+  fixtureId   String   @map("fixture_id")
+  source      String
+  homeOdds    Float    @map("home_odds")
+  drawOdds    Float    @map("draw_odds")
+  awayOdds    Float    @map("away_odds")
+  retrievedAt DateTime @default(now()) @map("retrieved_at")
+
+  fixture Fixture @relation(fields: [fixtureId], references: [id])
+
+  @@index([fixtureId])
+  @@index([source])
+  @@map("prediction_markets")
+}

@@ -7,10 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "contract:emit": "prisma contract emit"
+    "postinstall": "prisma generate",
+    "prisma:generate": "prisma generate",
+    "prisma:studio": "prisma studio",
+    "prisma:push": "prisma db push"
   },
   "dependencies": {
-    "@prisma/client": "^7.10.1",
+    "@prisma/client": "^6.4.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.119.0",
     "next": "16.4.5",
@@ -24,7 +27,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
-    "prisma": "^8.0.0-rc.32",
+    "prisma": "^6.4.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

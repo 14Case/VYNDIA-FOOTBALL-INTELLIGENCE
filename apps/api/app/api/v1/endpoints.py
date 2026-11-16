@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 
 from app.core.config import settings
 from app.prediction.simulator import simulate_match_poisson
+from app.agents.orchestrator import orchestrator
 
 router = APIRouter()
 
@@ -114,3 +115,68 @@ async def get_fixture_prediction(fixture_id: str):
         "predicted_at": datetime.now(timezone.utc).isoformat(),
         **sim,
     }
+
+
+# ---------------------------------------------------------------------------
+# AI Agent Orchestration Endpoints
+# ---------------------------------------------------------------------------
+
+class AgentAnalysisRequest(BaseModel):
+    home_team: str = Field(..., description="Home team name")
+    away_team: str = Field(..., description="Away team name")
+    home_xg: Optional[float] = Field(1.95, ge=0.1, le=8.0)
+    away_xg: Optional[float] = Field(1.35, ge=0.1, le=8.0)
+    market_odds: Optional[Dict[str, float]] = None
+
+
+@router.get("/agents")
+async def list_ai_agents():
+    """
+    Get live status, accuracy metrics, and heartbeats for all 4 AI analytical agents.
+    """
+    return {
+        "status": "active",
+        "orchestrator_version": "v1.4.0",
+        "total_agents": len(orchestrator.agents_map),
+        "agents": orchestrator.list_agents(),
+    }
+
+
+@router.post("/agents/ping-all")
+async def ping_all_agents():
+    """
+    Concurrent health check across all registered AI agents.
+    """
+    heartbeats = await orchestrator.ping_all()
+    return {
+        "status": "success",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "heartbeats": heartbeats,
+    }
+
+
+@router.post("/agents/{agent_id}/ping")
+async def ping_individual_agent(agent_id: str):
+    """
+    Ping an individual agent and measure round-trip inference latency.
+    """
+    res = await orchestrator.ping_agent(agent_id)
+    if not res:
+        raise HTTPException(status_code=404, detail=f"Agent '{agent_id}' not found")
+    return res
+
+
+@router.post("/agents/analyze")
+async def run_multi_agent_analysis(req: AgentAnalysisRequest):
+    """
+    Execute coordinated 4-agent tactical scouting and probability debrief.
+    """
+    dossier = await orchestrator.coordinate_match_analysis(
+        home_team=req.home_team,
+        away_team=req.away_team,
+        home_xg=req.home_xg or 1.95,
+        away_xg=req.away_xg or 1.35,
+        market_odds=req.market_odds,
+    )
+    return dossier
+

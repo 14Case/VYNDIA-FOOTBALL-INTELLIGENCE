@@ -174,3 +174,122 @@ export function simulateMatch(params: SimulationParams): Promise<SimulationResul
 export function getFixturePrediction(fixtureId: string): Promise<SimulationResult & { fixture_id: string; match: string }> {
   return apiFetch<SimulationResult & { fixture_id: string; match: string }>(`/predictions/${fixtureId}`);
 }
+
+// ---------------------------------------------------------------------------
+// AI Multi-Agent Intelligence Client
+// ---------------------------------------------------------------------------
+
+export interface AgentHeartbeat {
+  id: string;
+  codename: string;
+  status: string;
+  latency_ms: number;
+  last_active: string;
+}
+
+export interface AgentInfo {
+  id: string;
+  name: string;
+  codename: string;
+  role: string;
+  status: string;
+  model_version: string;
+  accuracy: number;
+  predictions_count: number;
+  latency_ms: number;
+  description: string;
+  last_active: string;
+}
+
+export interface AgentDossier {
+  matchup: string;
+  orchestration_status: string;
+  consensus_confidence: number;
+  tactical_intelligence: {
+    agent: string;
+    status: string;
+    spatial_metrics: {
+      home_pitch_control_pct: number;
+      away_pitch_control_pct: number;
+      home_pressing_index: number;
+      away_pressing_index: number;
+      counter_attack_risk: string;
+      vulnerable_channel: string;
+    };
+    tactical_verdict: string;
+  };
+  poisson_simulation: {
+    agent: string;
+    status: string;
+    probabilities: {
+      home_win: number;
+      draw: number;
+      away_win: number;
+    };
+    fair_odds: {
+      home: number;
+      draw: number;
+      away: number;
+    };
+    top_scorelines: Array<{ score: string; probability: number }>;
+  };
+  market_arbitrage: {
+    agent: string;
+    status: string;
+    edge_discovery: {
+      has_edge: boolean;
+      target_market: string;
+      expected_value_pct: number;
+      kelly_recommended_stake_pct: number;
+      arbitrage_verdict: string;
+    };
+  };
+  squad_sentiment: {
+    agent: string;
+    status: string;
+    squad_readiness: {
+      home_team_readiness_pct: number;
+      away_team_readiness_pct: number;
+      fatigue_risk_level: string;
+      manager_sentiment: string;
+    };
+    news_summary: string;
+  };
+  strategic_summary: {
+    projected_winner: string;
+    home_win_pct: number;
+    draw_pct: number;
+    away_win_pct: number;
+    key_edge: string;
+    tactical_headline: string;
+  };
+}
+
+/** GET /agents — list all active analytical agents. */
+export function getAgents(): Promise<{ agents: AgentInfo[] }> {
+  return apiFetch<{ agents: AgentInfo[] }>("/agents");
+}
+
+/** POST /agents/ping-all — concurrent health check across all agents. */
+export function pingAllAgents(): Promise<{ heartbeats: AgentHeartbeat[] }> {
+  return apiFetch<{ heartbeats: AgentHeartbeat[] }>("/agents/ping-all", { method: "POST" });
+}
+
+/** POST /agents/:agentId/ping — ping a single agent. */
+export function pingAgent(agentId: string): Promise<AgentHeartbeat> {
+  return apiFetch<AgentHeartbeat>(`/agents/${agentId}/ping`, { method: "POST" });
+}
+
+/** POST /agents/analyze — launch coordinated 4-agent tactical match debrief. */
+export function runAgentAnalysis(params: {
+  home_team: string;
+  away_team: string;
+  home_xg?: number;
+  away_xg?: number;
+}): Promise<AgentDossier> {
+  return apiFetch<AgentDossier>("/agents/analyze", {
+    method: "POST",
+    body: JSON.stringify(params),
+  });
+}
+

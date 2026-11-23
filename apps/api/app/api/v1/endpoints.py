@@ -13,11 +13,15 @@ from pydantic import BaseModel, Field
 from app.core.config import settings
 from app.prediction.simulator import simulate_match_poisson
 from app.agents.orchestrator import orchestrator
+from app.data_collection.sync_service import FootballDataSyncService
+from app.data_collection.football_client import FootballAPIClient
 
 router = APIRouter()
 
 # Track when the router module was first loaded
 _startup_time = datetime.now(timezone.utc)
+sync_service = FootballDataSyncService()
+football_client = FootballAPIClient()
 
 
 class SimulationRequest(BaseModel):
@@ -179,4 +183,46 @@ async def run_multi_agent_analysis(req: AgentAnalysisRequest):
         market_odds=req.market_odds,
     )
     return dossier
+
+
+# ---------------------------------------------------------------------------
+# Real-Time Data Ingestion & Supabase Sync Endpoints
+# ---------------------------------------------------------------------------
+
+class SyncFixturesRequest(BaseModel):
+    date: Optional[str] = Field(None, description="Target date in YYYY-MM-DD format (defaults to today)")
+
+
+@router.get("/sync/status")
+async def get_sync_status():
+    """
+    Check external football data provider status, quota usage, and database readiness.
+    """
+    api_status = await football_client.get_status()
+    return {
+        "provider": "API-Football (v3.football.api-sports.io)",
+        "api_status": api_status,
+        "supabase_configured": sync_service.is_supabase_configured(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+@router.post("/sync/fixtures")
+async def trigger_fixtures_sync(req: Optional[SyncFixturesRequest] = None):
+    """
+    Pull scheduled fixtures from API-Football, persist to Supabase, and compute Poisson probabilities.
+    """
+    target_date = req.date if req else None
+    res = await sync_service.sync_daily_fixtures(date_str=target_date)
+    return res
+
+
+@router.post("/sync/live")
+async def trigger_live_sync():
+    """
+    Poll all in-flight live matches and update scores and in-play status in Supabase.
+    """
+    res = await sync_service.sync_live_matches()
+    return res
+
 

@@ -14,14 +14,17 @@ import { NextResponse, type NextRequest } from "next/server";
  * }
  * ```
  */
+const DEFAULT_SUPABASE_URL = "https://ymebuupcsfbpqwixmcfy.supabase.co";
+const DEFAULT_SUPABASE_ANON_KEY = "sb_publishable_L08eJ0qrdeeyjcEv4uJ3qQ_FiVc54Y3";
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL || DEFAULT_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY,
     {
       cookies: {
         getAll() {

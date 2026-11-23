@@ -65,17 +65,18 @@ async def test_sync_service_fixture_payload_transformation():
         "score": {"halftime": {"home": 1, "away": 0}},
     }
 
-    sync = FootballDataSyncService(supabase_url="https://fake.supabase.co", supabase_key="fake-key")
+    sync = FootballDataSyncService(db_url="postgresql://test:test@localhost:5432/test")
+    mock_conn = AsyncMock()
+    mock_conn.fetchval.return_value = "cnt-esp"
+    mock_conn.execute.return_value = "INSERT 0 1"
 
-    with patch.object(sync, "_upsert_record", new_callable=AsyncMock) as mock_upsert:
-        mock_upsert.return_value = True
-        res = await sync.sync_fixture_payload(sample_item)
+    res = await sync.sync_fixture_payload(mock_conn, sample_item)
 
-        assert res["fixture_id"] == "999901"
-        assert res["status"] == "FINISHED"
-        assert res["match"] == "Real Madrid vs Barcelona"
-        assert res["score"] == "2 - 1"
-        assert "probabilities" in res
+    assert res["fixture_id"] == "999901"
+    assert res["status"] == "FINISHED"
+    assert res["match"] == "Real Madrid vs Barcelona"
+    assert res["score"] == "2 - 1"
+    assert "probabilities" in res
 
 
 def test_sync_status_endpoint():

@@ -51,7 +51,7 @@ export async function getMatches(): Promise<Match[]> {
     return fixtures.map((f: any) => {
       const pred = f.predictions?.[0];
       const mkt = f.markets?.[0];
-      const res = f.result;
+      const res = Array.isArray(f.result) ? f.result[0] : f.result;
 
       // Status mapping
       const status: "LIVE" | "UPCOMING" | "FINISHED" =

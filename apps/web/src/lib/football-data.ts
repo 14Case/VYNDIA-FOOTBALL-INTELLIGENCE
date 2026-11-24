@@ -47,7 +47,11 @@ export async function getMatches(): Promise<Match[]> {
       `)
       .order("scheduled_at", { ascending: true });
 
-    if (error || !fixtures || fixtures.length === 0) {
+    if (error) {
+      console.error("[football-data] getMatches Supabase error:", error);
+      return DEMO_MATCHES;
+    }
+    if (!fixtures || fixtures.length === 0) {
       return DEMO_MATCHES;
     }
 
@@ -245,7 +249,11 @@ export async function getPredictionsData(): Promise<EnrichedPrediction[]> {
         modelVersion:model_versions ( name, version )
       `);
 
-    if (error || !rows || rows.length === 0) {
+    if (error) {
+      console.error("[football-data] getPredictionsData Supabase error:", error);
+      return getFallbackPredictions();
+    }
+    if (!rows || rows.length === 0) {
       return getFallbackPredictions();
     }
 

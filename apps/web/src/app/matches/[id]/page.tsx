@@ -12,11 +12,9 @@ interface MatchAnalysisPageProps {
   params: Promise<{ id: string }>;
 }
 
-export function generateStaticParams() {
-  return DEMO_MATCHES.map((match) => ({
-    id: match.id,
-  }));
-}
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+export const revalidate = 0;
 
 export default async function MatchAnalysisPage({ params }: MatchAnalysisPageProps) {
   const { id } = await params;

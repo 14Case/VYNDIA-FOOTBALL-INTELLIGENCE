@@ -13,6 +13,9 @@ import {
 } from "@/data/demo-data";
 import { getLiveMatches, getUpcomingMatches } from "@/lib/football-data";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function OverviewDashboard() {
   const liveMatches = await getLiveMatches();
   const upcomingMatches = await getUpcomingMatches();

@@ -4,8 +4,28 @@ import { AppShell } from "@/components/layout/AppShell";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { DEMO_COMPETITIONS } from "@/data/demo-data";
+import { getCompetitions } from "@/lib/football-data";
 
-export default function CompetitionsPage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function CompetitionsPage() {
+  const dbCompetitions = await getCompetitions();
+  const competitions =
+    dbCompetitions && dbCompetitions.length > 0
+      ? dbCompetitions.map((c: any) => ({
+          id: c.id,
+          name: c.name,
+          code: c.short_name || "LEAG",
+          country: c.country?.name || "International",
+          tier: 1,
+          matchesPlayed: 38,
+          matchesTotal: 38,
+          teamsCount: 20,
+          avgGoalsPerMatch: 2.84,
+          avgXGPerMatch: 2.72,
+        }))
+      : DEMO_COMPETITIONS;
   return (
     <AppShell>
       {/* Header */}
@@ -15,7 +35,7 @@ export default function CompetitionsPage() {
             <h1 className="text-lg font-mono font-bold text-[#F8FAFC]">
               COMPETITIONS & LEAGUES
             </h1>
-            <Badge variant="blue">{DEMO_COMPETITIONS.length} COVERED</Badge>
+            <Badge variant="blue">{competitions.length} COVERED</Badge>
           </div>
           <p className="text-xs font-mono text-[#94A3B8] mt-1">
             Tier-1 global leagues tracked by the Vyndia probabilistic intelligence framework.
@@ -31,7 +51,7 @@ export default function CompetitionsPage() {
 
       {/* Competitions Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {DEMO_COMPETITIONS.map((comp) => (
+        {competitions.map((comp) => (
           <div
             key={comp.id}
             className="rounded-lg bg-[#121A2D] border border-[#1E2D4A] hover:border-[#2A3C60] transition-all p-4 space-y-4"

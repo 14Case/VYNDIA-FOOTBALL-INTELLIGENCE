@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { getLiveMatches } from "@/lib/football-data";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function LiveMatchesPage() {
   const liveMatches = await getLiveMatches();
 

@@ -10,6 +10,9 @@ import { DEMO_SYSTEM_METRICS } from "@/data/demo-data";
 import { getPredictionsData, EnrichedPrediction } from "@/lib/football-data";
 import { MatchSimulator } from "@/components/prediction/MatchSimulator";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function PredictionsPage() {
   const predictions: EnrichedPrediction[] = await getPredictionsData();
 

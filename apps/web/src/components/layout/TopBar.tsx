@@ -10,7 +10,8 @@ export function TopBar() {
 
   useEffect(() => {
     // Check FastAPI health endpoint
-    fetch("http://localhost:8000/api/v1/health")
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    fetch(`${apiUrl}/api/v1/health`)
       .then((res) => {
         if (res.ok) setBackendStatus("online");
         else setBackendStatus("offline");

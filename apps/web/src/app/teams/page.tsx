@@ -2,9 +2,14 @@ import React from "react";
 import Link from "next/link";
 import { AppShell } from "@/components/layout/AppShell";
 import { Badge } from "@/components/ui/Badge";
-import { DEMO_TEAMS } from "@/data/demo-data";
+import { getTeams } from "@/lib/football-data";
 
-export default function TeamsPage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function TeamsPage() {
+  const teams = await getTeams();
+
   return (
     <AppShell>
       {/* Header */}
@@ -14,10 +19,10 @@ export default function TeamsPage() {
             <h1 className="text-lg font-mono font-bold text-[#F8FAFC]">
               TEAMS & TACTICAL PROFILES
             </h1>
-            <Badge variant="blue">{DEMO_TEAMS.length} PROFILED</Badge>
+            <Badge variant="blue">{teams.length} PROFILED</Badge>
           </div>
           <p className="text-xs font-mono text-[#94A3B8] mt-1">
-            Aggregated rolling expected goals, possession metrics, and recent form curves.
+            Aggregated rolling expected goals, possession metrics, and recent form curves synced with Supabase.
           </p>
         </div>
 
@@ -32,7 +37,7 @@ export default function TeamsPage() {
 
       {/* Teams Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {DEMO_TEAMS.map((team) => (
+        {teams.map((team) => (
           <div
             key={team.id}
             className="rounded-lg bg-[#121A2D] border border-[#1E2D4A] hover:border-[#2A3C60] transition-all p-4 space-y-3"

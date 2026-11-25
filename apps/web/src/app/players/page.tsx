@@ -1,9 +1,14 @@
 import React from "react";
 import { AppShell } from "@/components/layout/AppShell";
 import { Badge } from "@/components/ui/Badge";
-import { DEMO_PLAYERS } from "@/data/demo-data";
+import { getPlayers } from "@/lib/football-data";
 
-export default function PlayersPage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function PlayersPage() {
+  const players = await getPlayers();
+
   return (
     <AppShell>
       {/* Header */}
@@ -13,10 +18,10 @@ export default function PlayersPage() {
             <h1 className="text-lg font-mono font-bold text-[#F8FAFC]">
               PLAYERS INTELLIGENCE DATABASE
             </h1>
-            <Badge variant="blue">{DEMO_PLAYERS.length} MONITORED</Badge>
+            <Badge variant="blue">{players.length} MONITORED</Badge>
           </div>
           <p className="text-xs font-mono text-[#94A3B8] mt-1">
-            Individual telemetry: Expected Goals (xG), Expected Assists (xA), and spatial impact ratings.
+            Individual telemetry: Expected Goals (xG), Expected Assists (xA), and spatial impact ratings synced with Supabase.
           </p>
         </div>
 
@@ -31,7 +36,7 @@ export default function PlayersPage() {
 
       {/* Players Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {DEMO_PLAYERS.map((player) => (
+        {players.map((player) => (
           <div
             key={player.id}
             className="rounded-lg bg-[#121A2D] border border-[#1E2D4A] hover:border-[#2A3C60] transition-all p-4 space-y-3"

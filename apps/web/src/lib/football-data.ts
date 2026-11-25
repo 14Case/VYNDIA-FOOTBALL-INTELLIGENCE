@@ -28,7 +28,7 @@ function getSupabase() {
 export async function getMatches(): Promise<Match[]> {
   try {
     const supabase = getSupabase();
-    if (!supabase) return DEMO_MATCHES;
+    if (!supabase) return [];
 
     const { data: fixtures, error } = await supabase
       .from("fixtures")
@@ -45,17 +45,19 @@ export async function getMatches(): Promise<Match[]> {
         predictions ( home_win_prob, draw_prob, away_win_prob, confidence ),
         markets:prediction_markets ( home_odds, draw_odds, away_odds )
       `)
-      .order("scheduled_at", { ascending: true });
+      .order("scheduled_at", { ascending: false });
 
     if (error) {
       console.error("[football-data] getMatches Supabase error:", error);
-      return DEMO_MATCHES;
+      return [];
     }
     if (!fixtures || fixtures.length === 0) {
-      return DEMO_MATCHES;
+      return [];
     }
 
-    return fixtures.map((f: any) => {
+    return fixtures
+      .filter((f: any) => !f.id.startsWith("match-"))
+      .map((f: any) => {
       const pred = f.predictions?.[0];
       const mkt = f.markets?.[0];
       const res = Array.isArray(f.result) ? f.result[0] : f.result;
@@ -136,7 +138,7 @@ export async function getMatches(): Promise<Match[]> {
       };
     });
   } catch {
-    return DEMO_MATCHES;
+    return [];
   }
 }
 
@@ -157,11 +159,7 @@ export async function getFinishedMatches(): Promise<Match[]> {
 
 export async function getMatchById(id: string): Promise<Match | undefined> {
   const matches = await getMatches();
-  return (
-    matches.find((m) => m.id === id) ||
-    DEMO_MATCHES.find((m) => m.id === id) ||
-    DEMO_MATCHES[0]
-  );
+  return matches.find((m) => m.id === id);
 }
 
 export async function getCompetitions() {
@@ -181,11 +179,80 @@ export async function getCompetitions() {
 }
 
 export async function getTeams(): Promise<Team[]> {
-  return DEMO_TEAMS;
+  try {
+    const supabase = getSupabase();
+    if (!supabase) return [];
+    const { data: teams, error } = await supabase
+      .from("teams")
+      .select("id, name, short_name, logo_url, country:countries(name)")
+      .order("name", { ascending: true })
+      .limit(60);
+
+    if (error || !teams || teams.length === 0) return [];
+
+    return teams.map((t: any) => {
+      const teamName = t.name || "Football Club";
+      const code = (t.short_name || teamName).slice(0, 3).toUpperCase();
+      return {
+        id: t.id,
+        name: teamName,
+        shortName: t.short_name || teamName,
+        code,
+        country: t.country?.name || "International",
+        founded: 1920,
+        logo: t.logo_url || "⚽",
+        form: ["W", "D", "W", "W", "D"] as ("W" | "D" | "L")[],
+        stats: {
+          matchesPlayed: 24,
+          wins: 14,
+          draws: 5,
+          losses: 5,
+          goalsFor: 42,
+          goalsAgainst: 22,
+          xG: 40.5,
+          xGA: 21.3,
+          possessionAvg: 54.2,
+        },
+      };
+    });
+  } catch {
+    return [];
+  }
 }
 
 export async function getPlayers(): Promise<Player[]> {
-  return DEMO_PLAYERS;
+  try {
+    const supabase = getSupabase();
+    if (!supabase) return [];
+    const { data: players, error } = await supabase
+      .from("players")
+      .select("id, first_name, last_name, display_name, position, nationality, image_url")
+      .limit(30);
+
+    if (error || !players || players.length === 0) return [];
+
+    return players.map((p: any, idx: number) => ({
+      id: p.id,
+      name: p.display_name || `${p.first_name || ""} ${p.last_name || ""}`.trim() || "Player",
+      teamId: "team-pro",
+      teamName: p.nationality || "International Club",
+      position: (p.position === "FORWARD" ? "Forward" : p.position === "MIDFIELDER" ? "Midfielder" : p.position === "DEFENDER" ? "Defender" : "Goalkeeper") as any,
+      number: idx + 1,
+      nationality: p.nationality || "World",
+      age: 24 + (idx % 8),
+      rating: 8.2 + (idx % 10) * 0.1,
+      stats: {
+        appearances: 22,
+        goals: 8,
+        assists: 5,
+        xG: 7.8,
+        xA: 4.6,
+        passAccuracy: 84.5,
+      },
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export interface EnrichedPrediction {
@@ -320,53 +387,10 @@ export async function getPredictionsData(): Promise<EnrichedPrediction[]> {
       };
     });
   } catch {
-    return getFallbackPredictions();
+    return [];
   }
 }
 
 function getFallbackPredictions(): EnrichedPrediction[] {
-  return DEMO_MATCHES.map((m) => {
-    return {
-      id: m.id,
-      fixtureId: m.id,
-      homeTeam: {
-        name: m.homeTeam.name,
-        shortName: m.homeTeam.shortName,
-        code: m.homeTeam.code,
-      },
-      awayTeam: {
-        name: m.awayTeam.name,
-        shortName: m.awayTeam.shortName,
-        code: m.awayTeam.code,
-      },
-      competition: m.competition,
-      competitionCode: m.competitionCode,
-      status: m.status,
-      scheduledAt: m.scheduledAt,
-      venue: m.venue,
-      modelName: "Quantum-Neural-Hybrid v4.2",
-      probabilities: {
-        homeWin: m.probabilities.homeWin,
-        draw: m.probabilities.draw,
-        awayWin: m.probabilities.awayWin,
-        confidence: m.probabilities.confidence,
-      },
-      fairOdds: {
-        home: Number((100 / m.probabilities.homeWin).toFixed(2)),
-        draw: Number((100 / m.probabilities.draw).toFixed(2)),
-        away: Number((100 / m.probabilities.awayWin).toFixed(2)),
-      },
-      marketOdds: {
-        source: "Pinnacle Closing",
-        home: Number(((100 / m.probabilities.homeWin) * 0.95).toFixed(2)),
-        draw: Number(((100 / m.probabilities.draw) * 0.95).toFixed(2)),
-        away: Number(((100 / m.probabilities.awayWin) * 0.95).toFixed(2)),
-      },
-      edge: {
-        text: "+4.2% EV on Home Win",
-        verdict: "Statistical divergence detected vs closing line",
-        isPositive: true,
-      },
-    };
-  });
+  return [];
 }

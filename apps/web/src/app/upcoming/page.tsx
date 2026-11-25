@@ -4,14 +4,18 @@ import { AppShell } from "@/components/layout/AppShell";
 import { MatchCard } from "@/components/ui/MatchCard";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { DEMO_COMPETITIONS } from "@/data/demo-data";
-import { getUpcomingMatches } from "@/lib/football-data";
+import { getUpcomingMatches, getCompetitions } from "@/lib/football-data";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function UpcomingMatchesPage() {
   const upcomingMatches = await getUpcomingMatches();
+  const dbCompetitions = (await getCompetitions()) || [];
+  const competitions = dbCompetitions.map((c: any) => ({
+    id: c.id,
+    code: c.short_name || "LEAG",
+  }));
 
   return (
     <AppShell>
@@ -32,7 +36,7 @@ export default async function UpcomingMatchesPage() {
         {/* Filter Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
           <Button variant="primary" size="sm">All Leagues</Button>
-          {DEMO_COMPETITIONS.map((c) => (
+          {competitions.slice(0, 8).map((c: any) => (
             <Button key={c.id} variant="secondary" size="sm">
               {c.code}
             </Button>

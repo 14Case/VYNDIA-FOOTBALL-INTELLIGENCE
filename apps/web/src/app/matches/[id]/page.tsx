@@ -5,7 +5,6 @@ import { StatusChip } from "@/components/ui/StatusChip";
 import { ProbabilityBar } from "@/components/ui/ProbabilityBar";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { DEMO_MATCHES } from "@/data/demo-data";
 import { getMatchById } from "@/lib/football-data";
 
 interface MatchAnalysisPageProps {
@@ -18,7 +17,24 @@ export const revalidate = 0;
 
 export default async function MatchAnalysisPage({ params }: MatchAnalysisPageProps) {
   const { id } = await params;
-  const match = (await getMatchById(id)) || DEMO_MATCHES[0];
+  const match = await getMatchById(id);
+
+  if (!match) {
+    return (
+      <AppShell>
+        <div className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-4">
+          <h1 className="text-xl font-mono font-bold text-[#F8FAFC]">Match Not Found</h1>
+          <p className="text-sm text-[#94A3B8]">The requested fixture ID ({id}) is not currently in the active telemetry registry.</p>
+          <Link href="/matches">
+            <Button variant="primary" size="sm">
+              <span>View All Matches</span>
+            </Button>
+          </Link>
+        </div>
+      </AppShell>
+    );
+  }
+
   const isLive = match.status === "LIVE";
 
   return (

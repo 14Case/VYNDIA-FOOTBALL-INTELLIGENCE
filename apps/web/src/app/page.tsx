@@ -64,19 +64,19 @@ export default async function OverviewDashboard() {
         />
         <MetricCard
           title="Live Matches Monitored"
-          value={DEMO_SYSTEM_METRICS.liveMatchesTracked}
+          value={liveMatches.length}
           delta="ACTIVE PITCH"
-          deltaType="neutral"
+          deltaType={liveMatches.length > 0 ? "positive" : "neutral"}
           subtitle="Sub-second xG & pressing telemetry"
-          sparklineData={[0, 1, 1, 2, 2, 2, 3, 2]}
+          sparklineData={[0, 1, 1, 2, 2, 2, liveMatches.length]}
         />
         <MetricCard
-          title="Daily Predictions"
-          value={DEMO_SYSTEM_METRICS.predictionsCalculatedToday}
-          delta="+18 vs Yesterday"
+          title="Daily Projections"
+          value={upcomingMatches.length + liveMatches.length}
+          delta="REALTIME SYNC"
           deltaType="positive"
-          subtitle="Tier-1 European competitions"
-          sparklineData={[120, 140, 155, 162, 170, 184]}
+          subtitle="Real fixtures tracked in Supabase"
+          sparklineData={[12, 18, 25, 34, 45, upcomingMatches.length + liveMatches.length]}
         />
         <MetricCard
           title="Model Edge Yield"
@@ -107,11 +107,17 @@ export default async function OverviewDashboard() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {liveMatches.map((match) => (
-                <MatchCard key={match.id} match={match} />
-              ))}
-            </div>
+            {liveMatches.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {liveMatches.map((match) => (
+                  <MatchCard key={match.id} match={match} />
+                ))}
+              </div>
+            ) : (
+              <div className="p-4 rounded-lg bg-[#121A2D] border border-[#1E2D4A] text-center text-xs font-mono text-[#94A3B8]">
+                No matches currently in-play. Real-time telemetry will activate automatically when fixtures kick off.
+              </div>
+            )}
           </section>
 
           {/* Upcoming High-Value Fixtures */}

@@ -38,7 +38,8 @@ export default async function LiveMatchesPage() {
       </div>
 
       {/* Grid of Live Match Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      {liveMatches.length > 0 ? (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {liveMatches.map((match) => (
           <div
             key={match.id}
@@ -129,6 +130,15 @@ export default async function LiveMatchesPage() {
           </div>
         ))}
       </div>
+      ) : (
+        <div className="p-8 rounded-lg bg-[#121A2D] border border-[#1E2D4A] text-center space-y-2">
+          <p className="text-sm font-mono text-[#F8FAFC]">No Live Fixtures In Play Right Now</p>
+          <p className="text-xs text-[#94A3B8]">The telemetry radar will activate as soon as official matches kick off.</p>
+          <Link href="/matches" className="inline-block mt-3 text-xs font-mono text-[#3B82F6] hover:underline">
+            Browse All Fixtures →
+          </Link>
+        </div>
+      )}
     </AppShell>
   );
 }

@@ -24,6 +24,7 @@ export function TopBar() {
     if (path === "/") return "Overview Dashboard";
     if (path.startsWith("/live")) return "Live Match Telemetry";
     if (path.startsWith("/upcoming")) return "Upcoming Fixtures & Odds";
+    if (path.startsWith("/results")) return "Match Results & Historical Archive";
     if (path.startsWith("/matches")) return "Detailed Match Analysis";
     if (path.startsWith("/predictions")) return "AI Prediction Center";
     if (path.startsWith("/competitions")) return "Competitions & Leagues";

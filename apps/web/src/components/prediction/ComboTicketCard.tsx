@@ -21,6 +21,8 @@ export function ComboTicketCard({ ticket }: ComboTicketCardProps) {
       ? "border-[#10B981]/40 shadow-[0_0_25px_rgba(16,185,129,0.08)]"
       : ticket.category === "CHAMPIONS_LEAGUE"
       ? "border-[#3B82F6]/50 shadow-[0_0_25px_rgba(59,130,246,0.12)]"
+      : ticket.category === "AUDACIOUS"
+      ? "border-[#F59E0B]/40 shadow-[0_0_25px_rgba(245,158,11,0.08)]"
       : "border-[#8B5CF6]/40 shadow-[0_0_25px_rgba(139,92,246,0.08)]";
 
   const topGradient =
@@ -28,6 +30,8 @@ export function ComboTicketCard({ ticket }: ComboTicketCardProps) {
       ? "from-[#10B981]/40 via-[#10B981]/10 to-transparent"
       : ticket.category === "CHAMPIONS_LEAGUE"
       ? "from-[#38BDF8]/50 via-[#3B82F6]/20 to-transparent"
+      : ticket.category === "AUDACIOUS"
+      ? "from-[#F59E0B]/40 via-[#F59E0B]/10 to-transparent"
       : "from-[#8B5CF6]/40 via-[#8B5CF6]/10 to-transparent";
 
   const handleCopy = () => {
@@ -62,7 +66,9 @@ export function ComboTicketCard({ ticket }: ComboTicketCardProps) {
             {ticket.category === "SAFE"
               ? "🛡️ SÉCURISÉ / FAIBLE RISQUE"
               : ticket.category === "CHAMPIONS_LEAGUE"
-              ? "⭐ SPÉCIAL CHAMPIONS LEAGUE"
+              ? "⭐ CHOCS DU SOIR (EUROPE)"
+              : ticket.category === "AUDACIOUS"
+              ? "🎯 AUDACIEUX / MULTI-BUTS"
               : "⚡ VALUE MAX (+EV)"}
           </Badge>
           <span className="text-[11px] font-mono font-bold text-[#34D399]">
@@ -73,9 +79,15 @@ export function ComboTicketCard({ ticket }: ComboTicketCardProps) {
         <h3 className="text-base font-mono font-bold text-[#F8FAFC] tracking-tight">
           {ticket.title}
         </h3>
-        <p className="text-xs font-mono text-[#94A3B8] mt-1 mb-4">
+        <p className="text-xs font-mono text-[#94A3B8] mt-1 mb-3">
           {ticket.tagline}
         </p>
+
+        {ticket.learnedRule && (
+          <div className="p-2 mb-3 rounded bg-[#3B82F6]/10 border border-[#3B82F6]/30 text-[10px] font-mono text-[#38BDF8] flex items-center gap-1.5">
+            <span>{ticket.learnedRule}</span>
+          </div>
+        )}
 
         {/* Big Odds Box */}
         <div className="p-3.5 rounded-lg bg-[#090D16] border border-[#1E2D4A] flex items-center justify-between mb-4">

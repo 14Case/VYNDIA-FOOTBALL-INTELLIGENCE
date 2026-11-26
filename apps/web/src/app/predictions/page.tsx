@@ -5,9 +5,15 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { MetricCard } from "@/components/ui/MetricCard";
 import { DEMO_SYSTEM_METRICS } from "@/data/demo-data";
-import { getPredictionsData, getRecommendedCombos, EnrichedPrediction } from "@/lib/football-data";
+import {
+  getPredictionsData,
+  getRecommendedCombos,
+  getPastEvaluatedTickets,
+  EnrichedPrediction,
+} from "@/lib/football-data";
 import { MatchSimulator } from "@/components/prediction/MatchSimulator";
-import { CombosSection } from "@/components/prediction/CombosSection";
+import { TicketGenerator } from "@/components/prediction/TicketGenerator";
+import { AILearningDashboard } from "@/components/prediction/AILearningDashboard";
 import { PredictionsTable } from "@/components/prediction/PredictionsTable";
 
 export const dynamic = "force-dynamic";
@@ -15,11 +21,10 @@ export const revalidate = 0;
 
 export default async function PredictionsPage() {
   const predictions: EnrichedPrediction[] = await getPredictionsData();
-  const combos = getRecommendedCombos(predictions);
+  const initialCombos = getRecommendedCombos(predictions, 3);
+  const pastTickets = getPastEvaluatedTickets();
 
-  const uclCount = predictions.filter(
-    (p) => p.isUcl || p.competition.toLowerCase().includes("champions league")
-  ).length;
+  const activeCount = predictions.filter((p) => p.status !== "FINISHED").length;
 
   return (
     <AppShell>
@@ -29,25 +34,25 @@ export default async function PredictionsPage() {
           <div className="flex items-center gap-2">
             <Badge variant="violet">QUANTUM NEURAL ENGINE</Badge>
             <h1 className="text-lg font-mono font-bold text-[#F8FAFC]">
-              CENTRE DE PRONOSTICS & COMBINAISONS IA
+              CENTRE DE PRONOSTICS &amp; COMBINAISONS IA
             </h1>
           </div>
           <p className="text-xs font-mono text-[#94A3B8] mt-1">
-            Matrice prédictive probabiliste : scores exacts Poisson bivarié, régression spatiale et discovery d&apos;Expected Value (+EV) sur la Ligue des Champions.
+            Matrice prédictive probabiliste : auto-destruction des matchs terminés, générateur de 2 à 4 tickets et apprentissage continu à partir des erreurs passées.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <a href="#combos">
-            <Button variant="primary" size="sm">
-              <span>Voir les 3 Tickets Combinés</span>
-            </Button>
-          </a>
-          <Link href="/live">
+          <Link href="/results">
             <Button variant="secondary" size="sm">
-              <span>Matchs en Direct</span>
+              <span>Résultats des Matchs Passés</span>
             </Button>
           </Link>
+          <a href="#combos">
+            <Button variant="primary" size="sm">
+              <span>Générateur de Tickets</span>
+            </Button>
+          </a>
         </div>
       </div>
 
@@ -70,25 +75,28 @@ export default async function PredictionsPage() {
           sparklineData={[3.2, 3.8, 4.1, 4.4, 4.8]}
         />
         <MetricCard
-          title="Matchs UCL ce Soir"
-          value={uclCount > 0 ? `${uclCount} Affiches` : `${predictions.length} Matchs`}
-          delta="CALIBRÉ POISSON"
+          title="Matchs Actifs Disponibles"
+          value={`${activeCount} Affiches`}
+          delta="PURGE AUTO"
           deltaType="positive"
-          subtitle="Champions League & Tops Ligues"
-          sparklineData={[2, 4, 6, 8, uclCount || predictions.length]}
+          subtitle="Matchs passés retirés des tickets"
+          sparklineData={[6, 8, 9, 10, activeCount]}
         />
         <MetricCard
-          title="Latence Inférence"
-          value={DEMO_SYSTEM_METRICS.databaseLatency}
-          delta="OPTIMAL"
+          title="Apprentissage Continu"
+          value="94.2%"
+          delta="FEEDBACK LOOP"
           deltaType="positive"
-          subtitle="Pipeline FastAPI + Supabase"
-          sparklineData={[28, 24, 22, 19, 18]}
+          subtitle="4 règles correctives injectées"
+          sparklineData={[82, 85, 88, 91, 94.2]}
         />
       </div>
 
-      {/* COMBOS / TICKETS COMBINÉS SECTION */}
-      <CombosSection combos={combos} />
+      {/* INTERACTIVE TICKET GENERATOR (2 to 4 Tickets with Auto-Destruction) */}
+      <TicketGenerator initialCombos={initialCombos} predictions={predictions} />
+
+      {/* AI SELF-CORRECTION & LEARNING DASHBOARD */}
+      <AILearningDashboard pastTickets={pastTickets} />
 
       {/* Interactive Match Simulator Component */}
       <MatchSimulator />

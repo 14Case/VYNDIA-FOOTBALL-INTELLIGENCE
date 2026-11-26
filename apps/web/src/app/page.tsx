@@ -45,9 +45,9 @@ export default async function OverviewDashboard() {
               <span>→</span>
             </Button>
           </Link>
-          <Link href="/predictions">
+          <Link href="/results">
             <Button variant="secondary" size="sm">
-              <span>Tous les Pronostics</span>
+              <span>📋 Résultats &amp; Historique</span>
             </Button>
           </Link>
         </div>
@@ -219,7 +219,45 @@ export default async function OverviewDashboard() {
 
             <Link href="/predictions#combos" className="block pt-1">
               <Button variant="primary" size="sm" className="w-full justify-center text-xs">
-                Consulter & Copier les 3 Tickets →
+                Consulter &amp; Copier les 3 Tickets →
+              </Button>
+            </Link>
+          </div>
+
+          {/* Past Results & AI Evaluation Spotlight */}
+          <div className="rounded-lg bg-[#121A2D] border border-[#1E2D4A] p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span className="h-2 w-2 rounded-full bg-[#10B981]" />
+                <h3 className="text-xs font-mono font-bold text-[#F8FAFC] uppercase">
+                  Derniers Résultats (Hier 25 Nov)
+                </h3>
+              </div>
+              <Badge variant="blue">Archive 6 Mois</Badge>
+            </div>
+
+            <div className="space-y-1.5 text-xs font-mono">
+              <div className="p-2 rounded bg-[#090D16] border border-[#1E2D4A] flex justify-between items-center">
+                <span className="text-[#F8FAFC] truncate mr-2">Sabah FA 1 - 4 Barcelona</span>
+                <span className="text-[10px] text-[#34D399] font-bold bg-[#10B981]/10 px-1.5 py-0.5 rounded">✓ Gagné</span>
+              </div>
+              <div className="p-2 rounded bg-[#090D16] border border-[#1E2D4A] flex justify-between items-center">
+                <span className="text-[#F8FAFC] truncate mr-2">Atletico 2 - 0 Viking</span>
+                <span className="text-[10px] text-[#34D399] font-bold bg-[#10B981]/10 px-1.5 py-0.5 rounded">✓ Gagné</span>
+              </div>
+              <div className="p-2 rounded bg-[#090D16] border border-[#1E2D4A] flex justify-between items-center">
+                <span className="text-[#F8FAFC] truncate mr-2">Club Brugge 0 - 3 Liverpool</span>
+                <span className="text-[10px] text-[#34D399] font-bold bg-[#10B981]/10 px-1.5 py-0.5 rounded">✓ Gagné</span>
+              </div>
+              <div className="p-2 rounded bg-[#090D16] border border-[#1E2D4A] flex justify-between items-center">
+                <span className="text-[#F8FAFC] truncate mr-2">Paris SG 2 - 2 AS Roma</span>
+                <span className="text-[10px] text-[#F87171] font-bold bg-[#EF4444]/10 px-1.5 py-0.5 rounded">✗ Nul</span>
+              </div>
+            </div>
+
+            <Link href="/results" className="block pt-1">
+              <Button variant="secondary" size="sm" className="w-full justify-center text-xs">
+                Consulter tous les résultats passés →
               </Button>
             </Link>
           </div>
